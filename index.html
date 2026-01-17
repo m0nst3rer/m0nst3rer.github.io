@@ -57,6 +57,10 @@
 
 
 
+  
+<link rel="stylesheet" href="/theme/fluid/source/css/macpanel.css">
+
+
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
@@ -87,7 +91,7 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>Fluid</strong>
+      <strong>m0nst3rer&#39;Blog</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
@@ -189,7 +193,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="An elegant Material-Design theme for Hexo"></span>
+            <span id="subtitle" data-typed-text="雪山千里远，独照峨眉峰。"></span>
           
         </div>
 
@@ -254,6 +258,105 @@
     </article>
   </div>
 
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/01/17/Vulnhub%EF%BC%9ANarak/" target="_self">
+          
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2026/01/17/Vulnhub%EF%BC%9ANarak/" target="_self">
+        <div>
+          Vulnhub：Narak  使用arp-scan -l探测主机存活，可以看到192.168.182.152是目标机器  继续使用nmap进行信息收集： sudo nmap -sT --min-rate=10000 192.168.182.152 sudo nmap -sC -sV -O -Pn -n -p22,80 192.168.182.152 sudo nmap --script=vuln
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-01-17 17:28" pubdate>
+              2026-01-17
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/01/17/Vulnhub%EF%BC%9AMomentum2/" target="_self">
+          
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2026/01/17/Vulnhub%EF%BC%9AMomentum2/" target="_self">
+        <div>
+          Vulnhub：Momentum2  依旧是nmap+arp-scan进行基本信息收集 sudo nmap -sT -A -O -p- --min-rate=10000 192.168.182.173 sudo arp-scan -l  依旧是80和22两个端口，那么进行目录扫描： sudo gobuster dir -u http://192.168.182.173 -w /usr/share/
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-01-17 15:56" pubdate>
+              2026-01-17
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2026/01/17/Vulnhub%EF%BC%9AMomentum1/" target="_self">
+          
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2026/01/17/Vulnhub%EF%BC%9AMomentum1/" target="_self">
+        <div>
+          Vulnhub：Momentum1  使用nmap、arp-scan进行基本的信息收集 sudo nmap --script=vuln 192.168.182.186 sudo arp-scan -l  看到开放了22和80两个端口，接下来再使用gobuster进行目录扫描进一步发现更多有用信息，-x参数指定更多文件后缀进行Fuzz sudo gobuster dir -u http://192.
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-01-17 15:18" pubdate>
+              2026-01-17
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
 
 
 
@@ -300,6 +403,38 @@
 
   <footer>
     <div class="footer-inner">
+<div>
+  <span id="timeDate">正在载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("08/17/2020 00:00:00");
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "🚀已持续航行&nbsp"+dnum+"&nbsp天";  
+      document.getElementById("times").innerHTML = hnum + "&nbsp时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";
+  }
+  setInterval("createtime()",250);
+  </script>
+</div>
+
   
     <div class="footer-content">
        <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
@@ -359,6 +494,10 @@
   <script  src="/js/local-search.js" ></script>
 
 
+
+
+  
+<script src="/theme/fluid/source/js/stars.js"></script>
 
 
 
