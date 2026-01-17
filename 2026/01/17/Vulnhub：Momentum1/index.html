@@ -26,22 +26,22 @@
 <meta property="og:site_name" content="m0nst3rer&#39;Blog">
 <meta property="og:description" content="Vulnhub：Momentum1  使用nmap、arp-scan进行基本的信息收集 sudo nmap --script&#x3D;vuln 192.168.182.186 sudo arp-scan -l  看到开放了22和80两个端口，接下来再使用gobuster进行目录扫描进一步发现更多有用信息，-x参数指定更多文件后缀进行Fuzz sudo gobuster dir -u http:&#x2F;&#x2F;192.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="c:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117143622701.png">
-<meta property="og:image" content="c:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117144302814.png">
-<meta property="og:image" content="c:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117144409094.png">
-<meta property="og:image" content="c:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117144557019.png">
-<meta property="og:image" content="c:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117145046506.png">
-<meta property="og:image" content="c:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117145812173.png">
-<meta property="og:image" content="c:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117150035758.png">
-<meta property="og:image" content="c:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117150906408.png">
-<meta property="og:image" content="c:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117151204412.png">
-<meta property="og:image" content="c:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117151521574.png">
-<meta property="og:image" content="c:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117151731912.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20260117143622701.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20260117144302814.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20260117144409094.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20260117144557019.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20260117145046506.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20260117145812173.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20260117150035758.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20260117150906408.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20260117151204412.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20260117151521574.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20260117151731912.png">
 <meta property="article:published_time" content="2026-01-17T07:18:12.824Z">
 <meta property="article:modified_time" content="2026-01-17T07:18:13.055Z">
 <meta property="article:author" content="m0nst3rer">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="c:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117143622701.png">
+<meta name="twitter:image" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20260117143622701.png">
   
   
   
@@ -296,32 +296,32 @@
 <p>使用nmap、arp-scan进行基本的信息收集</p>
 <p><code>sudo nmap --script=vuln 192.168.182.186</code></p>
 <p><code>sudo arp-scan -l</code></p>
-<p><img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117143622701.png" srcset="/img/loading.gif" lazyload alt="image-20260117143622701"></p>
+<p><img src="Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117143622701.png" srcset="/img/loading.gif" lazyload alt="image-20260117143622701"></p>
 <p>看到开放了22和80两个端口，接下来再使用gobuster进行目录扫描进一步发现更多有用信息，-x参数指定更多文件后缀进行Fuzz</p>
 <p><code>sudo gobuster dir -u http://192.168.182.186 -w /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -x php,txt,html,bak,zip</code></p>
-<p><img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117144302814.png" srcset="/img/loading.gif" lazyload alt="image-20260117144302814"></p>
+<p><img src="Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117144302814.png" srcset="/img/loading.gif" lazyload alt="image-20260117144302814"></p>
 <p>根据刚才的信息，访问80端口看看是什么页面</p>
-<p><img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117144409094.png" srcset="/img/loading.gif" lazyload alt="image-20260117144409094"></p>
+<p><img src="Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117144409094.png" srcset="/img/loading.gif" lazyload alt="image-20260117144409094"></p>
 <p>只有四张图片没有多余的信息，源码也没有相关提示，随便点一张看看有什么变化</p>
-<p><img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117144557019.png" srcset="/img/loading.gif" lazyload alt="image-20260117144557019"></p>
+<p><img src="Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117144557019.png" srcset="/img/loading.gif" lazyload alt="image-20260117144557019"></p>
 <p>发现在URL中存在id关键字，那么我们是否可控？可以的话则可以尝试进行SQL注入、命令执行等操作</p>
-<p><img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117145046506.png" srcset="/img/loading.gif" lazyload alt="image-20260117145046506"></p>
+<p><img src="Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117145046506.png" srcset="/img/loading.gif" lazyload alt="image-20260117145046506"></p>
 <p>没用。SQL注入啥的也无果，那试试xss</p>
 <p>Payload：<code>opus-details.php?id=&lt;script&gt;alert(alert(document.cookie))&lt;/script&gt;</code></p>
-<p><img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117145812173.png" srcset="/img/loading.gif" lazyload alt="image-20260117145812173"></p>
+<p><img src="Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117145812173.png" srcset="/img/loading.gif" lazyload alt="image-20260117145812173"></p>
 <p>拿到cookie值，很明显加密的。在之前进行目录扫描时看见有一个js文件，里面有这样一段代码：</p>
-<p><img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117150035758.png" srcset="/img/loading.gif" lazyload alt="image-20260117150035758"></p>
+<p><img src="Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117150035758.png" srcset="/img/loading.gif" lazyload alt="image-20260117150035758"></p>
 <p>看到注释了一段代码，很明显是用了AES加密，还给出了密码参数值<code>SecretPassphraseMomentum</code></p>
 <p>直接拿刚才获取到的Cookie解密，成功得到明文：<code>auxerre-alienum##</code></p>
-<p><img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117150906408.png" srcset="/img/loading.gif" lazyload alt="image-20260117150906408"></p>
+<p><img src="Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117150906408.png" srcset="/img/loading.gif" lazyload alt="image-20260117150906408"></p>
 <p>根据上述明文，这很可能就是ssh的登录凭证，尝试进行ssh登录，<code>auxerre:auxerre-alienum##</code></p>
-<p><img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117151204412.png" srcset="/img/loading.gif" lazyload alt="image-20260117151204412"></p>
+<p><img src="Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117151204412.png" srcset="/img/loading.gif" lazyload alt="image-20260117151204412"></p>
 <p>后续进行提权，读取最后的Flag</p>
-<p><img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117151521574.png" srcset="/img/loading.gif" lazyload alt="image-20260117151521574"></p>
+<p><img src="Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117151521574.png" srcset="/img/loading.gif" lazyload alt="image-20260117151521574"></p>
 <p>看到有rediscli_history，直接去看里面找线索，也是直接拿到rootpass</p>
-<p><img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117151731912.png" srcset="/img/loading.gif" lazyload alt="image-20260117151731912"></p>
+<p><img src="Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117151731912.png" srcset="/img/loading.gif" lazyload alt="image-20260117151731912"></p>
 <p>done.</p>
-
+</h1>
                 
               </div>
             
