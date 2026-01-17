@@ -19,12 +19,12 @@
   <meta name="author" content="m0nst3rer">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Vulnhub：Momentum1  使用nmap、arp-scan进行基本的信息收集 sudo nmap --script&#x3D;vuln 192.168.182.186 sudo arp-scan -l  看到开放了22和80两个端口，接下来再使用gobuster进行目录扫描进一步发现更多有用信息，-x参数指定更多文件后缀进行Fuzz sudo gobuster dir -u http:&#x2F;&#x2F;192.">
+    <meta name="description" content="title: Vulnhub: Momentum1 使用nmap、arp-scan进行基本的信息收集 sudo nmap --script&#x3D;vuln 192.168.182.186 sudo arp-scan -l  看到开放了22和80两个端口，接下来再使用gobuster进行目录扫描进一步发现更多有用信息，-x参数指定更多文件后缀进行Fuzz sudo gobuster dir -u http">
 <meta property="og:type" content="article">
 <meta property="og:title" content="m0nst3rer&#39;Blog">
 <meta property="og:url" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/index.html">
 <meta property="og:site_name" content="m0nst3rer&#39;Blog">
-<meta property="og:description" content="Vulnhub：Momentum1  使用nmap、arp-scan进行基本的信息收集 sudo nmap --script&#x3D;vuln 192.168.182.186 sudo arp-scan -l  看到开放了22和80两个端口，接下来再使用gobuster进行目录扫描进一步发现更多有用信息，-x参数指定更多文件后缀进行Fuzz sudo gobuster dir -u http:&#x2F;&#x2F;192.">
+<meta property="og:description" content="title: Vulnhub: Momentum1 使用nmap、arp-scan进行基本的信息收集 sudo nmap --script&#x3D;vuln 192.168.182.186 sudo arp-scan -l  看到开放了22和80两个端口，接下来再使用gobuster进行目录扫描进一步发现更多有用信息，-x参数指定更多文件后缀进行Fuzz sudo gobuster dir -u http">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20260117143622701.png">
 <meta property="og:image" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20260117144302814.png">
@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20260117151521574.png">
 <meta property="og:image" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20260117151731912.png">
 <meta property="article:published_time" content="2026-01-17T07:18:12.824Z">
-<meta property="article:modified_time" content="2026-01-17T07:18:13.055Z">
+<meta property="article:modified_time" content="2026-01-17T16:43:18.036Z">
 <meta property="article:author" content="m0nst3rer">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://m0nst3rer.github.io/2026/01/17/Vulnhub%EF%BC%9AMomentum1/Users/lenovo/AppData/Roaming/Typora/typora-user-images/image-20260117143622701.png">
@@ -238,7 +238,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          353 字
+          354 字
         
       </span>
     
@@ -291,8 +291,7 @@
             
               <div class="markdown-body">
                 
-                <h1>Vulnhub：Momentum1
-
+                <p>title: Vulnhub: Momentum1</p>
 <p>使用nmap、arp-scan进行基本的信息收集</p>
 <p><code>sudo nmap --script=vuln 192.168.182.186</code></p>
 <p><code>sudo arp-scan -l</code></p>
@@ -321,7 +320,7 @@
 <p>看到有rediscli_history，直接去看里面找线索，也是直接拿到rootpass</p>
 <p><img src="Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20260117151731912.png" srcset="/img/loading.gif" lazyload alt="image-20260117151731912"></p>
 <p>done.</p>
-</h1>
+
                 
               </div>
             

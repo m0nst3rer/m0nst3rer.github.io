@@ -272,7 +272,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2026/01/17/Vulnhub%EF%BC%9ANarak/" target="_self">
         <div>
-          Vulnhub：Narak  使用arp-scan -l探测主机存活，可以看到192.168.182.152是目标机器  继续使用nmap进行信息收集： sudo nmap -sT --min-rate=10000 192.168.182.152 sudo nmap -sC -sV -O -Pn -n -p22,80 192.168.182.152 sudo nmap --script=vuln
+          title: Vulnhub: Narak 使用arp-scan -l探测主机存活，可以看到192.168.182.152是目标机器  继续使用nmap进行信息收集： sudo nmap -sT --min-rate=10000 192.168.182.152 sudo nmap -sC -sV -O -Pn -n -p22,80 192.168.182.152 sudo nmap --scrip
         </div>
       </a>
 
@@ -305,7 +305,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2026/01/17/Vulnhub%EF%BC%9AMomentum2/" target="_self">
         <div>
-          Vulnhub：Momentum2  依旧是nmap+arp-scan进行基本信息收集 sudo nmap -sT -A -O -p- --min-rate=10000 192.168.182.173 sudo arp-scan -l  依旧是80和22两个端口，那么进行目录扫描： sudo gobuster dir -u http://192.168.182.173 -w /usr/share/
+          title: Vulnhub: Momentum2 依旧是nmap+arp-scan进行基本信息收集 sudo nmap -sT -A -O -p- --min-rate=10000 192.168.182.173 sudo arp-scan -l  依旧是80和22两个端口，那么进行目录扫描： sudo gobuster dir -u http://192.168.182.173 -w /usr
         </div>
       </a>
 
@@ -338,7 +338,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2026/01/17/Vulnhub%EF%BC%9AMomentum1/" target="_self">
         <div>
-          Vulnhub：Momentum1  使用nmap、arp-scan进行基本的信息收集 sudo nmap --script=vuln 192.168.182.186 sudo arp-scan -l  看到开放了22和80两个端口，接下来再使用gobuster进行目录扫描进一步发现更多有用信息，-x参数指定更多文件后缀进行Fuzz sudo gobuster dir -u http://192.
+          title: Vulnhub: Momentum1 使用nmap、arp-scan进行基本的信息收集 sudo nmap --script=vuln 192.168.182.186 sudo arp-scan -l  看到开放了22和80两个端口，接下来再使用gobuster进行目录扫描进一步发现更多有用信息，-x参数指定更多文件后缀进行Fuzz sudo gobuster dir -u http
         </div>
       </a>
 
