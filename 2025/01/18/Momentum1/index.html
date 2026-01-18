@@ -19,19 +19,34 @@
   <meta name="author" content="m0nst3rer">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="关于">
-<meta property="og:url" content="https://m0nst3rer.github.io/about/index.html">
+    <meta name="description" content="使用nmap和arp-scan进行基础的信息收集，根据arp-scan的主机存活探测知道192.168.182.186为靶机地址，sudo nmap --script&#x3D;vuln 192.168.182.186进行漏洞脚本扫描  可以看到开放了80和22两个端口，接下来使用gobuster进行目录扫描，sudo gobuster dir -u http:&#x2F;&#x2F;192.168.182.186 -w &#x2F;u">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Momentum1">
+<meta property="og:url" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/index.html">
 <meta property="og:site_name" content="m0nst3rer&#39;Blog">
+<meta property="og:description" content="使用nmap和arp-scan进行基础的信息收集，根据arp-scan的主机存活探测知道192.168.182.186为靶机地址，sudo nmap --script&#x3D;vuln 192.168.182.186进行漏洞脚本扫描  可以看到开放了80和22两个端口，接下来使用gobuster进行目录扫描，sudo gobuster dir -u http:&#x2F;&#x2F;192.168.182.186 -w &#x2F;u">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-01-17T14:24:26.000Z">
-<meta property="article:modified_time" content="2026-01-17T14:25:26.488Z">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/image-20260118204719965.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/image-20260118205054142.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/image-20260118205540630.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/image-20260118205632754.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/image-20260118205735102.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/image-20260118210021640.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/image-20260118210249758.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/image-20260118210551039.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/image-20260118210712681.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/image-20260118210925884.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/image-20260118211118543.png">
+<meta property="article:published_time" content="2025-01-18T12:40:03.000Z">
+<meta property="article:modified_time" content="2026-01-18T13:57:20.218Z">
 <meta property="article:author" content="m0nst3rer">
+<meta property="article:tag" content="Vulnhub">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/image-20260118204719965.png">
   
   
   
-  <title>关于 - m0nst3rer&#39;Blog</title>
+  <title>Momentum1 - m0nst3rer&#39;Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -95,7 +110,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 60vh;">
+<div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -201,9 +216,49 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="关于"></span>
+            <span id="subtitle" data-typed-text="Momentum1"></span>
           
         </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-18 20:40" pubdate>
+          2025年1月18日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          396 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          4 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
 
         
       </div>
@@ -219,75 +274,180 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div id="board"
-          >
-          
-            <div class="about-avatar">
-              <img src="/img/Sec.png" srcset="/img/loading.gif" lazyload class="img-fluid" alt="avatar">
-            </div>
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
+      
 
-<div class="text-center">
-  <div class="about-info">
-    <div class="about-name">m0nst3rer</div>
-    <div class="about-intro">退堂鼓一级演奏艺术家</div>
-    <div class="about-icons">
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
       
-        
-        
-        
-        <a href=https://github.com class="
-           hint--bottom hint--rounded"
-           aria-label="GitHub"
-           target="_blank"
-        >
-          <i class="iconfont icon-github-fill" aria-hidden="true"></i>
-          
-        </a>
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Momentum1</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>使用<code>nmap</code>和<code>arp-scan</code>进行基础的信息收集，根据<code>arp-scan</code>的主机存活探测知道<code>192.168.182.186</code>为靶机地址，<code>sudo nmap --script=vuln 192.168.182.186</code>进行漏洞脚本扫描</p>
+<p><img src="/2025/01/18/Momentum1/image-20260118204719965.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以看到开放了80和22两个端口，接下来使用<code>gobuster</code>进行目录扫描，<code>sudo gobuster dir -u http://192.168.182.186 -w /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -x php,txt,html,bak,zip</code>，通过<code>-x</code>参数添加更多文件后缀进行Fuzz</p>
+<p><img src="/2025/01/18/Momentum1/image-20260118205054142.png" srcset="/img/loading.gif" lazyload></p>
+<p>可以看到扫出挺多东西，那么先访问80端口看看</p>
+<p><img src="/2025/01/18/Momentum1/image-20260118205540630.png" srcset="/img/loading.gif" lazyload></p>
+<p>看到有四张图片，随便点一张看看</p>
+<p><img src="/2025/01/18/Momentum1/image-20260118205632754.png" srcset="/img/loading.gif" lazyload></p>
+<p>发现关键字<code>id</code>，那么可以尝试SQL注入攻击或者命令执行等操作</p>
+<p><img src="/2025/01/18/Momentum1/image-20260118205735102.png" srcset="/img/loading.gif" lazyload></p>
+<p>发现会直接打印输出，没什么用，那么试试XSS攻击。Payload：<code>opus-detail.php?id=&lt;script&gt;alert(alert(document.cookie))&lt;/script&gt;</code></p>
+<p><img src="/2025/01/18/Momentum1/image-20260118210021640.png" srcset="/img/loading.gif" lazyload></p>
+<p>成功拿到Cookie值，然后在刚刚的目录扫描的&#x2F;img目录中发现一段js代码</p>
+<p><img src="/2025/01/18/Momentum1/image-20260118210249758.png" srcset="/img/loading.gif" lazyload></p>
+<p>这里提示说需要去AES解密一串字符串，关键字<code>SecretPassphraseMomentum</code>，那应该就是上面所拿到的Cookie值了</p>
+<p><img src="/2025/01/18/Momentum1/image-20260118210551039.png" srcset="/img/loading.gif" lazyload></p>
+<p>对Cookie值进行AES解密，得到凭据<code>auxerre-alienum##</code>，估计就是ssh的登录凭证了</p>
+<p><img src="/2025/01/18/Momentum1/image-20260118210712681.png" srcset="/img/loading.gif" lazyload></p>
+<p>登录成功，试了几次才发现一整串才是密码，拿到<code>user.txt</code>flag，后面继续进行提权</p>
+<p><img src="/2025/01/18/Momentum1/image-20260118210925884.png" srcset="/img/loading.gif" lazyload></p>
+<p>发现了<code>.rediscli_history</code>，说明有redis服务，进去看看也是拿到了<code>rootpass</code>，那么直接切换root账户就行</p>
+<p><img src="/2025/01/18/Momentum1/image-20260118211118543.png" srcset="/img/loading.gif" lazyload></p>
+<h3>总结</h3>
+
+<p>使用<code>nmap</code>和<code>arp-scan</code>进行基础信息收集；<code>gobuster</code>进行目录扫描；XSS弹Cookie；解密拿到ssh登录凭证；redis-cli拿到rootpass；切换至root账户获取最终Flag。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
       
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
         
-        
-        
-        <a href=https://douban.com class="
-           hint--bottom hint--rounded"
-           aria-label="豆瓣"
-           target="_blank"
-        >
-          <i class="iconfont icon-douban-fill" aria-hidden="true"></i>
-          
-        </a>
+  <a href="/categories/Vulnhub/" class="category-chain-item">Vulnhub</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
       
-        
-        
-        
-        <a  class="qr-trigger
-           "
-           
-           target="_self"
-        >
-          <i class="iconfont icon-wechat-fill" aria-hidden="true"></i>
-          
-            <img class="qr-img" src="/img/favicon.png" srcset="/img/loading.gif" lazyload alt="qrcode" />
-          
-        </a>
+        <a href="/tags/Vulnhub/" class="print-no-link">#Vulnhub</a>
       
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Momentum1</div>
+      <div>https://m0nst3rer.github.io/2025/01/18/Momentum1/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>m0nst3rer</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年1月18日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/18/Momentum2/" title="Momentum2">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Momentum2</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
     </div>
   </div>
 </div>
 
-<article class="about-content page-content mt-5">
-  <div class="markdown-body">
-    
-  </div>
-
-  
-</article>
-
 
 
 
@@ -314,11 +474,8 @@
 
 
 
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+
     
 
     
@@ -442,6 +599,46 @@
   
 
 
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
 
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>

