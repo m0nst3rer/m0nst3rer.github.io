@@ -65,16 +65,6 @@ Fluid.events = {
   },
 
   registerScrollDownArrowEvent: function() {
-    var scrollbar = jQuery('.scroll-down-bar');
-    if (scrollbar.length === 0) {
-      return;
-    }
-    scrollbar.on('click', function() {
-      Fluid.utils.scrollToElement('#board', -jQuery('#navbar').height());
-    });
-  },
-
-function() {
     var topArrow = jQuery('#scroll-top-button');
     if (topArrow.length === 0) {
       return;
