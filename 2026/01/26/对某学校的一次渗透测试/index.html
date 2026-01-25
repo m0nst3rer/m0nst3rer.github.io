@@ -19,46 +19,34 @@
   <meta name="author" content="m0nst3rer">
   <meta name="keywords" content="">
   
-    <meta name="description" content="正文  前期进行信息收集找到一个后台管理中心，账号密码默认自动填好了直接登录进去就行  进入首页有如下功能点  可以在资料下载和内部交流处进行文件上传，没有文件后缀限制，先上传一个phpinfo上去看看解不解析  这里上传后返回的路径为：xxx&#x2F;&#x2F;xxx.php，但是并不是完整路径。这里有一个小技巧：去找那些已存在的图片，所存放的路径即为完整路径。首先在公文发布处任点一篇进行修">
+    <meta name="description" content="弱口令  前期对目标进行信息收集，发现一处图书馆的登录处  对其进行爆破，得到一个弱口令账户凭据，那么直接进行登录  文件上传一  登录进来后随便点击看看有什么功能点，这时候发现了可以进行上传文件  那么直接尝试上传马子，可以看到能直接上传  那么再连接即可  文件上传二  在资源管理处存在第二处上传点  继续尝试构造数据包上传  访问上传的webshell，回显200那么直接连接就行  成功获取">
 <meta property="og:type" content="article">
-<meta property="og:title" content="记一次渗透测试">
-<meta property="og:url" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/index.html">
+<meta property="og:title" content="对某学校的一次渗透测试">
+<meta property="og:url" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/index.html">
 <meta property="og:site_name" content="m0nst3rer&#39;Blog">
-<meta property="og:description" content="正文  前期进行信息收集找到一个后台管理中心，账号密码默认自动填好了直接登录进去就行  进入首页有如下功能点  可以在资料下载和内部交流处进行文件上传，没有文件后缀限制，先上传一个phpinfo上去看看解不解析  这里上传后返回的路径为：xxx&#x2F;&#x2F;xxx.php，但是并不是完整路径。这里有一个小技巧：去找那些已存在的图片，所存放的路径即为完整路径。首先在公文发布处任点一篇进行修">
+<meta property="og:description" content="弱口令  前期对目标进行信息收集，发现一处图书馆的登录处  对其进行爆破，得到一个弱口令账户凭据，那么直接进行登录  文件上传一  登录进来后随便点击看看有什么功能点，这时候发现了可以进行上传文件  那么直接尝试上传马子，可以看到能直接上传  那么再连接即可  文件上传二  在资源管理处存在第二处上传点  继续尝试构造数据包上传  访问上传的webshell，回显200那么直接连接就行  成功获取">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122220830999.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122220903476.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122221039125.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122221422556.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122221502135.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122221618579.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122221734488.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122221948251.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122222048638.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122222142528.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122222311836.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122222350967.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122222444983.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122222656134.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122222754858.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122222910544.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122223002769.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122223335345.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122223420907.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122223447316.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122223759121.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122223825609.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122223845204.png">
-<meta property="article:published_time" content="2026-01-22T14:03:39.000Z">
-<meta property="article:modified_time" content="2026-01-22T14:39:22.004Z">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001018138.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001252197.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001439810.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001811917.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126002113369.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126002516739.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126002858686.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126003118974.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126003413631.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126003546418.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126003915055.png">
+<meta property="article:published_time" content="2026-01-25T16:02:42.000Z">
+<meta property="article:modified_time" content="2026-01-25T16:47:42.468Z">
 <meta property="article:author" content="m0nst3rer">
 <meta property="article:tag" content="渗透测试">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://m0nst3rer.github.io/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122220830999.png">
+<meta name="twitter:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001018138.png">
   
   
   
-  <title>记一次渗透测试 - m0nst3rer&#39;Blog</title>
+  <title>对某学校的一次渗透测试 - m0nst3rer&#39;Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -228,7 +216,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="记一次渗透测试"></span>
+            <span id="subtitle" data-typed-text="对某学校的一次渗透测试"></span>
           
         </div>
 
@@ -239,8 +227,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-01-22 22:03" pubdate>
-          2026年1月22日 晚上
+        <time datetime="2026-01-26 00:02" pubdate>
+          2026年1月26日 凌晨
         </time>
       </span>
     
@@ -251,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          495 字
+          389 字
         
       </span>
     
@@ -262,7 +250,7 @@
         
         
         
-          5 分钟
+          4 分钟
         
       </span>
     
@@ -299,58 +287,40 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">记一次渗透测试</h1>
+            <h1 id="seo-header">对某学校的一次渗透测试</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>正文</h1>
+                <h1>弱口令</h1>
 
-<p>前期进行信息收集找到一个后台管理中心，账号密码默认自动填好了直接登录进去就行</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122220830999.png" srcset="/img/loading.gif" lazyload></p>
-<p>进入首页有如下功能点</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122220903476.png" srcset="/img/loading.gif" lazyload></p>
-<p>可以在资料下载和内部交流处进行文件上传，没有文件后缀限制，先上传一个<code>phpinfo</code>上去看看解不解析</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122221039125.png" srcset="/img/loading.gif" lazyload></p>
-<p>这里上传后返回的路径为：xxx&#x2F;&#x2F;xxx.php，但是并不是完整路径。这里有一个小技巧：去找那些已存在的图片，所存放的路径即为完整路径。首先在公文发布处任点一篇进行修改</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122221422556.png" srcset="/img/loading.gif" lazyload></p>
-<p>然后选择查看附件</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122221502135.png" srcset="/img/loading.gif" lazyload></p>
-<p>看到附件内容是一张图片，此时看到URL地址是完整的图片路径</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122221618579.png" srcset="/img/loading.gif" lazyload></p>
-<p>接着对刚刚上传的<code>phpinfo</code>路径进行拼接访问即可，看到是可以解析php文件的</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122221734488.png" srcset="/img/loading.gif" lazyload></p>
-<p>此时已经能证明文件上传getshell了，继续深入看看。找到其他两个系统的未授权访问</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122221948251.png" srcset="/img/loading.gif" lazyload alt="1"></p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122222048638.png" srcset="/img/loading.gif" lazyload alt="2"></p>
-<p>然后遇到一个需要手机号才能登录的站点</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122222142528.png" srcset="/img/loading.gif" lazyload></p>
-<p>尝试利用收集的字典进行爆破，无果。</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122222311836.png" srcset="/img/loading.gif" lazyload></p>
-<p>转战小程序端</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122222350967.png" srcset="/img/loading.gif" lazyload></p>
-<p>资产并不多，依旧登录框</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122222444983.png" srcset="/img/loading.gif" lazyload></p>
-<p>经测试，若用自己的手机号会显示未绑定账户，在数据包中进行替换也不行</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122222656134.png" srcset="/img/loading.gif" lazyload></p>
-<p>那又返回web端，然后又找到一处还没测试过的资产</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122222754858.png" srcset="/img/loading.gif" lazyload></p>
-<p>搜索一下发现有Nday，尝试进行利用</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122222910544.png" srcset="/img/loading.gif" lazyload></p>
-<p>构造PoC进行测试，失败</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122223002769.png" srcset="/img/loading.gif" lazyload></p>
-<p>报错说文件或目录不存在，猜测文件并不在C盘啥的或者已经打补丁了，依旧无果</p>
-<p>行，再返回一开始的后台管理系统，找到了<code>Ueditor</code>百度编辑器，它支持多种富文本编辑功能</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122223335345.png" srcset="/img/loading.gif" lazyload></p>
-<p>找上传点，尝试打一个XSS</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122223420907.png" srcset="/img/loading.gif" lazyload></p>
-<p>可以看到能弹框</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122223447316.png" srcset="/img/loading.gif" lazyload></p>
-<p>继续，在DNSlog平台申请个域名尝试打一个SSRF攻击</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122223759121.png" srcset="/img/loading.gif" lazyload></p>
-<p>可以看到能正常收到请求</p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122223825609.png" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260122223845204.png" srcset="/img/loading.gif" lazyload></p>
+<p>前期对目标进行信息收集，发现一处图书馆的登录处</p>
+<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001018138.png" srcset="/img/loading.gif" lazyload></p>
+<p>对其进行爆破，得到一个弱口令账户凭据，那么直接进行登录</p>
+<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001252197.png" srcset="/img/loading.gif" lazyload></p>
+<h1>文件上传一</h1>
+
+<p>登录进来后随便点击看看有什么功能点，这时候发现了可以进行上传文件</p>
+<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001439810.png" srcset="/img/loading.gif" lazyload></p>
+<p>那么直接尝试上传马子，可以看到能直接上传</p>
+<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001811917.png" srcset="/img/loading.gif" lazyload></p>
+<p>那么再连接即可</p>
+<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126002113369.png" srcset="/img/loading.gif" lazyload></p>
+<h1>文件上传二</h1>
+
+<p>在资源管理处存在第二处上传点</p>
+<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126002516739.png" srcset="/img/loading.gif" lazyload></p>
+<p>继续尝试构造数据包上传</p>
+<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126002858686.png" srcset="/img/loading.gif" lazyload></p>
+<p>访问上传的webshell，回显200那么直接连接就行</p>
+<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126003118974.png" srcset="/img/loading.gif" lazyload></p>
+<p>成功获取网络情况以及系统权限</p>
+<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126003413631.png" srcset="/img/loading.gif" lazyload></p>
+<p>权限为<code>System</code></p>
+<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126003546418.png" srcset="/img/loading.gif" lazyload></p>
+<p>发现存在数据库配置文件，泄露库名以及密码等信息。</p>
+<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126003915055.png" srcset="/img/loading.gif" lazyload></p>
+<p>注：以上漏洞均已提交至EDUSRC。文章中涉及的程序(方法)可能带有攻击性，仅供安全研究与教学之用，读者将其信息做其他用途，由用户承担全部法律及连带责任，文章作者不承担任何法律及连带责任，本人坚决反对利用文章内容进行恶意攻击行为，推荐大家在了解技术原理的前提下，更好的维护个人信息安全、企业安全、国家安全，本文内容未隐讳任何个人、群体、公司。非文学作品，请勿过度理解，根据《计算机软件保护条例》第十七条，本站所有软件请仅用于学习研究用途。</p>
 
                 
               </div>
@@ -396,8 +366,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>记一次渗透测试</div>
-      <div>https://m0nst3rer.github.io/2026/01/22/记一次渗透测试/</div>
+      <div>对某学校的一次渗透测试</div>
+      <div>https://m0nst3rer.github.io/2026/01/26/对某学校的一次渗透测试/</div>
     </div>
     <div class="license-meta">
       
@@ -409,7 +379,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年1月22日</div>
+          <div>2026年1月26日</div>
         </div>
       
       
@@ -441,18 +411,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="对某学校的一次渗透测试">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">对某学校的一次渗透测试</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/01/19/Orasi/" title="Orasi">
-                        <span class="hidden-mobile">Orasi</span>
+                      <a href="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="记一次渗透测试">
+                        <span class="hidden-mobile">记一次渗透测试</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
