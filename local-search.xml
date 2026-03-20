@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Lord_of_the_root</title>
+    <link href="/2026/03/20/Lord-of-the-root/"/>
+    <url>/2026/03/20/Lord-of-the-root/</url>
+    
+    <content type="html"><![CDATA[<h1>信息收集</h1><p>首先使用nmap进行初步探测</p><p><img src="/2026/03/20/Lord-of-the-root/51d32c05a8353bc4e72b5b2b4c26781.png"></p><p>发现只开放了22和1337两个端口，进行UDP扫描</p><p><img src="/2026/03/20/Lord-of-the-root/340b83c917f3d54b1268ea0d5b3f837.png"></p><p>只有一个ssh端口开放，既然如此那连接看看</p><p><img src="/2026/03/20/Lord-of-the-root/365b5445f2b80ff1428ab5575e45b72.png"></p><p>进来看到<code>Knock</code>就猜测需要进行端口敲门，那么使用<code>knock</code>进行端口敲门</p><p><img src="/2026/03/20/Lord-of-the-root/image-20260320154155949.png"></p><p>浏览器访问</p><p><img src="/2026/03/20/Lord-of-the-root/518fd0cac1ba0bb222f1f824f4c7d2e.png"></p><p>目录扫描发现<code>/404.html</code>，接着访问</p><p><img src="/2026/03/20/Lord-of-the-root/783f01fd9e5f50eaba332c74a5024fc.png"></p><p>在源码中发现一串加密的字符串，看起来像是base64</p><p><img src="/2026/03/20/Lord-of-the-root/image-20260320154454415.png"></p><p>尝试解码</p><p><img src="/2026/03/20/Lord-of-the-root/10438897c79f588d3b38240d73ae131.png"></p><h1>SQL注入</h1><p>得到隐藏信息：<code>/978345210/index.php</code>，接着拿去访问，是一个登录页面。那么就可以尝试SQL注入&#x2F;万能密码了</p><p><img src="/2026/03/20/Lord-of-the-root/13f777a3ae9b262ed3ddf6e572e7d23.png"></p><p>经测试得知User处存在SQL注入，为时间盲注，保存数据包打上星号标记扔给<code>SQLmap</code></p><p><img src="/2026/03/20/Lord-of-the-root/image-20260320155100993.png"></p><p><img src="/2026/03/20/Lord-of-the-root/6a4bf5666616f84703fd68ae7bab683.png"></p><p>跑的有点久，不过确实存在时间盲注</p><p><img src="/2026/03/20/Lord-of-the-root/e5a79295b517af165abd82457386950.png"></p><p>得到四个库名，在<code>Webapp</code>数据库下找到了<code>Users</code>数据表</p><p><img src="/2026/03/20/Lord-of-the-root/3b46e338b90f4740dbd354ecc0f2c0b.png"></p><p>发现存在<code>password</code>和<code>username</code>两个字段，那么直接dump下来</p><p><img src="/2026/03/20/Lord-of-the-root/a7dedc79c687e52320a31a63d7b3ffe.png"></p><h1>内核提权<h1 <p>得到五个用户的用户名以及密码，拿下来整理一下做成字典进行爆破<p></p><p><img src="/2026/03/20/Lord-of-the-root/e78f13fcbf26d4467f5eadf8f019aa9.png"></p><p>进行ssh爆破，得到登录凭据：<code>smeagol/MyPreciousR00t</code></p><p><img src="/2026/03/20/Lord-of-the-root/image-20260320155715166.png"></p><p>登录后上传<code>linpeas.sh</code>辅助提权脚本，发现内核版本挺低</p><p><img src="/2026/03/20/Lord-of-the-root/image-20260320160155351.png"></p><p>searchsploit找到对应的exp，靶机wget下来进行提权</p><p><img src="/2026/03/20/Lord-of-the-root/fdb890d1341405d3a4ed8c7e0965f8d.png"></p><p>成功提权至root用户</p><h1>UDF提权</h1><p>UDF（user defind function）用户自定义函数，通过添加新函数，对MySQL的功能进行扩充。调用方式与一般系统自带的函数相同，例如user()，version()等函数。udf 文件后缀在windows与linux系统下分别为dll与so，即动态链接库文件，由C、C++编写。</p><p>netstat发现开放3306端口</p><p><img src="/2026/03/20/Lord-of-the-root/0b03566ada39fa881202c17b595b022.png"></p><p>翻找数据库配置文件，得到登录账户和密码：<code>root/darkshadow</code></p><p><img src="/2026/03/20/Lord-of-the-root/image-20260320161527476.png"></p><p>进行登录，查看<code>secure_file_pri</code>是否为空值</p><p><img src="/2026/03/20/Lord-of-the-root/d79f3d82ec83a0a5b37d6a3fa5c2481.png"></p><p>查看权限，很好是root权限</p><p><img src="/2026/03/20/Lord-of-the-root/ed6261747b2cbf9d33128ac3b3c7cf3.png"></p><p>获取Plugin的路径，后面进行dumpfile</p><p><img src="/2026/03/20/Lord-of-the-root/eed6223d3cf8e90eed8493146c3419e.png"></p><p>获取服务器版本，发现是<code>i686</code>，也就是32位的架构</p><p><img src="/2026/03/20/Lord-of-the-root/aae6d333356c64755afbee60cef9ee6.png"></p><p>在kali中cd到相关目录：<code>/usr/share/metasploit-framework/data/exploit/mysql</code></p><p><img src="/2026/03/20/Lord-of-the-root/0eb43639335f0f7724be08ad767d2af.png"></p><p>选取32位的<code>lib_mysqludf_sys_32.so</code>文件，拷贝至相关文件夹下</p><p><img src="/2026/03/20/Lord-of-the-root/e0321969a9b3644660fd476f76f4b63.png"></p><p>导入动态链接库，方法有多种，这里使用hex编码写UDF文件。使用命令：<code>xxd -ps udf.so | tr &#39;\n&#39; &#39;@&#39; | sed s/@//g</code>。<code>xxd</code>：用于把文件转换成十六进制(hex)格式，<code>-p</code>：以“纯hex字符串“输出，<code>-s</code>：表示连续输出，<code>tr &#39;\n&#39; &#39;@&#39;</code>：表示把多行的hex内容变成一行(用@代替换行)，<code>| sed s/@//g</code>：表示把刚刚的@全部删除，最终得到一整行的hex字符串。</p><p><img src="/2026/03/20/Lord-of-the-root/10edd99988f8284839dfd0eef51d781.png"></p><p>靶机进入mysql服务，复制整行hex字符串再into dumpfile进去</p><p><img src="/2026/03/20/Lord-of-the-root/472feb947f8500e59c53dfcc515527a.png"></p><p><img src="/2026/03/20/Lord-of-the-root/79a3a7eba5adf0808d2d612e2880d75.png"></p><p>创建<code>sys_eval</code>函数</p><p><img src="/2026/03/20/Lord-of-the-root/61440fdb8119204933bfaa3625af5e6.png"></p><p>调用函数，可用</p><p><img src="/2026/03/20/Lord-of-the-root/bebb2c169cc18eb10598150e9e65e29-1773996542694-30.png"></p><p>使用<code>sys_eval</code>函数将系统的默认bash shell复制到<code>/tmp</code>目录下，给<code>/tmp/shell</code>设置SUID权限，执行该文件后就能获取到root shell。</p><p><img src="/2026/03/20/Lord-of-the-root/a15efdf3dba213e1d2c80e988ca3c9f.png"></p><p>提权后读取flag。</p><p><img src="/2026/03/20/Lord-of-the-root/9e2b2498f9722918d2ba9bbfcf2a828.png"></p></h1></h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>Vulnhub</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Vulnhub</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>对某学校的一次渗透测试</title>
     <link href="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"/>
     <url>/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/</url>

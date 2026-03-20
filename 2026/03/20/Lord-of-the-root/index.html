@@ -19,34 +19,56 @@
   <meta name="author" content="m0nst3rer">
   <meta name="keywords" content="">
   
-    <meta name="description" content="弱口令  前期对目标进行信息收集，发现一处图书馆的登录处  对其进行爆破，得到一个弱口令账户凭据，那么直接进行登录  文件上传一  登录进来后随便点击看看有什么功能点，这时候发现了可以进行上传文件  那么直接尝试上传马子，可以看到能直接上传  那么再连接即可  文件上传二  在资源管理处存在第二处上传点  继续尝试构造数据包上传  访问上传的webshell，回显200那么直接连接就行  成功获取">
+    <meta name="description" content="信息收集  首先使用nmap进行初步探测  发现只开放了22和1337两个端口，进行UDP扫描  只有一个ssh端口开放，既然如此那连接看看  进来看到Knock就猜测需要进行端口敲门，那么使用knock进行端口敲门  浏览器访问  目录扫描发现&#x2F;404.html，接着访问  在源码中发现一串加密的字符串，看起来像是base64  尝试解码  SQL注入  得到隐藏信息：&#x2F;978345210&#x2F;in">
 <meta property="og:type" content="article">
-<meta property="og:title" content="对某学校的一次渗透测试">
-<meta property="og:url" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/index.html">
+<meta property="og:title" content="Lord_of_the_root">
+<meta property="og:url" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/index.html">
 <meta property="og:site_name" content="m0nst3rer&#39;Blog">
-<meta property="og:description" content="弱口令  前期对目标进行信息收集，发现一处图书馆的登录处  对其进行爆破，得到一个弱口令账户凭据，那么直接进行登录  文件上传一  登录进来后随便点击看看有什么功能点，这时候发现了可以进行上传文件  那么直接尝试上传马子，可以看到能直接上传  那么再连接即可  文件上传二  在资源管理处存在第二处上传点  继续尝试构造数据包上传  访问上传的webshell，回显200那么直接连接就行  成功获取">
+<meta property="og:description" content="信息收集  首先使用nmap进行初步探测  发现只开放了22和1337两个端口，进行UDP扫描  只有一个ssh端口开放，既然如此那连接看看  进来看到Knock就猜测需要进行端口敲门，那么使用knock进行端口敲门  浏览器访问  目录扫描发现&#x2F;404.html，接着访问  在源码中发现一串加密的字符串，看起来像是base64  尝试解码  SQL注入  得到隐藏信息：&#x2F;978345210&#x2F;in">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001018138.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001252197.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001439810.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001811917.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126002113369.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126002516739.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126002858686.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126003118974.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126003413631.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126003546418.png">
-<meta property="og:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126003915055.png">
-<meta property="article:published_time" content="2026-01-25T16:02:42.000Z">
-<meta property="article:modified_time" content="2026-01-25T16:47:42.468Z">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/51d32c05a8353bc4e72b5b2b4c26781.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/340b83c917f3d54b1268ea0d5b3f837.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/365b5445f2b80ff1428ab5575e45b72.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/image-20260320154155949.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/518fd0cac1ba0bb222f1f824f4c7d2e.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/783f01fd9e5f50eaba332c74a5024fc.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/image-20260320154454415.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/10438897c79f588d3b38240d73ae131.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/13f777a3ae9b262ed3ddf6e572e7d23.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/image-20260320155100993.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/6a4bf5666616f84703fd68ae7bab683.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/e5a79295b517af165abd82457386950.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/3b46e338b90f4740dbd354ecc0f2c0b.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/a7dedc79c687e52320a31a63d7b3ffe.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/e78f13fcbf26d4467f5eadf8f019aa9.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/image-20260320155715166.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/image-20260320160155351.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/fdb890d1341405d3a4ed8c7e0965f8d.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/0b03566ada39fa881202c17b595b022.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/image-20260320161527476.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/d79f3d82ec83a0a5b37d6a3fa5c2481.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/ed6261747b2cbf9d33128ac3b3c7cf3.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/eed6223d3cf8e90eed8493146c3419e.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/aae6d333356c64755afbee60cef9ee6.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/0eb43639335f0f7724be08ad767d2af.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/e0321969a9b3644660fd476f76f4b63.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/10edd99988f8284839dfd0eef51d781.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/472feb947f8500e59c53dfcc515527a.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/79a3a7eba5adf0808d2d612e2880d75.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/61440fdb8119204933bfaa3625af5e6.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/bebb2c169cc18eb10598150e9e65e29-1773996542694-30.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/a15efdf3dba213e1d2c80e988ca3c9f.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/9e2b2498f9722918d2ba9bbfcf2a828.png">
+<meta property="article:published_time" content="2026-03-20T07:35:51.000Z">
+<meta property="article:modified_time" content="2026-03-20T08:55:13.240Z">
 <meta property="article:author" content="m0nst3rer">
-<meta property="article:tag" content="渗透测试">
+<meta property="article:tag" content="Vulnhub">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://m0nst3rer.github.io/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001018138.png">
+<meta name="twitter:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/51d32c05a8353bc4e72b5b2b4c26781.png">
   
   
   
-  <title>对某学校的一次渗透测试 - m0nst3rer&#39;Blog</title>
+  <title>Lord_of_the_root - m0nst3rer&#39;Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -216,7 +238,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="对某学校的一次渗透测试"></span>
+            <span id="subtitle" data-typed-text="Lord_of_the_root"></span>
           
         </div>
 
@@ -227,8 +249,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-01-26 00:02" pubdate>
-          2026年1月26日 凌晨
+        <time datetime="2026-03-20 15:35" pubdate>
+          2026年3月20日 下午
         </time>
       </span>
     
@@ -239,7 +261,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          389 字
+          239 字
         
       </span>
     
@@ -250,7 +272,7 @@
         
         
         
-          4 分钟
+          2 分钟
         
       </span>
     
@@ -287,41 +309,84 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">对某学校的一次渗透测试</h1>
+            <h1 id="seo-header">Lord_of_the_root</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>弱口令</h1>
+                <h1>信息收集</h1>
 
-<p>前期对目标进行信息收集，发现一处图书馆的登录处</p>
-<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001018138.png" srcset="/img/loading.gif" lazyload></p>
-<p>对其进行爆破，得到一个弱口令账户凭据，那么直接进行登录</p>
-<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001252197.png" srcset="/img/loading.gif" lazyload></p>
-<h1>文件上传一</h1>
+<p>首先使用nmap进行初步探测</p>
+<p><img src="/2026/03/20/Lord-of-the-root/51d32c05a8353bc4e72b5b2b4c26781.png" srcset="/img/loading.gif" lazyload></p>
+<p>发现只开放了22和1337两个端口，进行UDP扫描</p>
+<p><img src="/2026/03/20/Lord-of-the-root/340b83c917f3d54b1268ea0d5b3f837.png" srcset="/img/loading.gif" lazyload></p>
+<p>只有一个ssh端口开放，既然如此那连接看看</p>
+<p><img src="/2026/03/20/Lord-of-the-root/365b5445f2b80ff1428ab5575e45b72.png" srcset="/img/loading.gif" lazyload></p>
+<p>进来看到<code>Knock</code>就猜测需要进行端口敲门，那么使用<code>knock</code>进行端口敲门</p>
+<p><img src="/2026/03/20/Lord-of-the-root/image-20260320154155949.png" srcset="/img/loading.gif" lazyload></p>
+<p>浏览器访问</p>
+<p><img src="/2026/03/20/Lord-of-the-root/518fd0cac1ba0bb222f1f824f4c7d2e.png" srcset="/img/loading.gif" lazyload></p>
+<p>目录扫描发现<code>/404.html</code>，接着访问</p>
+<p><img src="/2026/03/20/Lord-of-the-root/783f01fd9e5f50eaba332c74a5024fc.png" srcset="/img/loading.gif" lazyload></p>
+<p>在源码中发现一串加密的字符串，看起来像是base64</p>
+<p><img src="/2026/03/20/Lord-of-the-root/image-20260320154454415.png" srcset="/img/loading.gif" lazyload></p>
+<p>尝试解码</p>
+<p><img src="/2026/03/20/Lord-of-the-root/10438897c79f588d3b38240d73ae131.png" srcset="/img/loading.gif" lazyload></p>
+<h1>SQL注入</h1>
 
-<p>登录进来后随便点击看看有什么功能点，这时候发现了可以进行上传文件</p>
-<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001439810.png" srcset="/img/loading.gif" lazyload></p>
-<p>那么直接尝试上传马子，可以看到能直接上传</p>
-<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126001811917.png" srcset="/img/loading.gif" lazyload></p>
-<p>那么再连接即可</p>
-<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126002113369.png" srcset="/img/loading.gif" lazyload></p>
-<h1>文件上传二</h1>
+<p>得到隐藏信息：<code>/978345210/index.php</code>，接着拿去访问，是一个登录页面。那么就可以尝试SQL注入&#x2F;万能密码了</p>
+<p><img src="/2026/03/20/Lord-of-the-root/13f777a3ae9b262ed3ddf6e572e7d23.png" srcset="/img/loading.gif" lazyload></p>
+<p>经测试得知User处存在SQL注入，为时间盲注，保存数据包打上星号标记扔给<code>SQLmap</code></p>
+<p><img src="/2026/03/20/Lord-of-the-root/image-20260320155100993.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2026/03/20/Lord-of-the-root/6a4bf5666616f84703fd68ae7bab683.png" srcset="/img/loading.gif" lazyload></p>
+<p>跑的有点久，不过确实存在时间盲注</p>
+<p><img src="/2026/03/20/Lord-of-the-root/e5a79295b517af165abd82457386950.png" srcset="/img/loading.gif" lazyload></p>
+<p>得到四个库名，在<code>Webapp</code>数据库下找到了<code>Users</code>数据表</p>
+<p><img src="/2026/03/20/Lord-of-the-root/3b46e338b90f4740dbd354ecc0f2c0b.png" srcset="/img/loading.gif" lazyload></p>
+<p>发现存在<code>password</code>和<code>username</code>两个字段，那么直接dump下来</p>
+<p><img src="/2026/03/20/Lord-of-the-root/a7dedc79c687e52320a31a63d7b3ffe.png" srcset="/img/loading.gif" lazyload></p>
+<h1>内核提权<h1 <p>得到五个用户的用户名以及密码，拿下来整理一下做成字典进行爆破<p></p>
+<p><img src="/2026/03/20/Lord-of-the-root/e78f13fcbf26d4467f5eadf8f019aa9.png" srcset="/img/loading.gif" lazyload></p>
+<p>进行ssh爆破，得到登录凭据：<code>smeagol/MyPreciousR00t</code></p>
+<p><img src="/2026/03/20/Lord-of-the-root/image-20260320155715166.png" srcset="/img/loading.gif" lazyload></p>
+<p>登录后上传<code>linpeas.sh</code>辅助提权脚本，发现内核版本挺低</p>
+<p><img src="/2026/03/20/Lord-of-the-root/image-20260320160155351.png" srcset="/img/loading.gif" lazyload></p>
+<p>searchsploit找到对应的exp，靶机wget下来进行提权</p>
+<p><img src="/2026/03/20/Lord-of-the-root/fdb890d1341405d3a4ed8c7e0965f8d.png" srcset="/img/loading.gif" lazyload></p>
+<p>成功提权至root用户</p>
+<h1>UDF提权</h1>
 
-<p>在资源管理处存在第二处上传点</p>
-<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126002516739.png" srcset="/img/loading.gif" lazyload></p>
-<p>继续尝试构造数据包上传</p>
-<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126002858686.png" srcset="/img/loading.gif" lazyload></p>
-<p>访问上传的webshell，回显200那么直接连接就行</p>
-<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126003118974.png" srcset="/img/loading.gif" lazyload></p>
-<p>成功获取网络情况以及系统权限</p>
-<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126003413631.png" srcset="/img/loading.gif" lazyload></p>
-<p>权限为<code>System</code></p>
-<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126003546418.png" srcset="/img/loading.gif" lazyload></p>
-<p>发现存在数据库配置文件，泄露库名以及密码等信息。</p>
-<p><img src="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/image-20260126003915055.png" srcset="/img/loading.gif" lazyload></p>
-<p>注：以上漏洞均已提交至EDUSRC。文章中涉及的程序(方法)可能带有攻击性，仅供安全研究与教学之用，读者将其信息做其他用途，由用户承担全部法律及连带责任，文章作者不承担任何法律及连带责任，本人坚决反对利用文章内容进行恶意攻击行为，推荐大家在了解技术原理的前提下，更好的维护个人信息安全、企业安全、国家安全，本文内容未隐讳任何个人、群体、公司。非文学作品，请勿过度理解，根据《计算机软件保护条例》第十七条，本站所有软件请仅用于学习研究用途。</p>
-
+<p>UDF（user defind function）用户自定义函数，通过添加新函数，对MySQL的功能进行扩充。调用方式与一般系统自带的函数相同，例如user()，version()等函数。udf 文件后缀在windows与linux系统下分别为dll与so，即动态链接库文件，由C、C++编写。</p>
+<p>netstat发现开放3306端口</p>
+<p><img src="/2026/03/20/Lord-of-the-root/0b03566ada39fa881202c17b595b022.png" srcset="/img/loading.gif" lazyload></p>
+<p>翻找数据库配置文件，得到登录账户和密码：<code>root/darkshadow</code></p>
+<p><img src="/2026/03/20/Lord-of-the-root/image-20260320161527476.png" srcset="/img/loading.gif" lazyload></p>
+<p>进行登录，查看<code>secure_file_pri</code>是否为空值</p>
+<p><img src="/2026/03/20/Lord-of-the-root/d79f3d82ec83a0a5b37d6a3fa5c2481.png" srcset="/img/loading.gif" lazyload></p>
+<p>查看权限，很好是root权限</p>
+<p><img src="/2026/03/20/Lord-of-the-root/ed6261747b2cbf9d33128ac3b3c7cf3.png" srcset="/img/loading.gif" lazyload></p>
+<p>获取Plugin的路径，后面进行dumpfile</p>
+<p><img src="/2026/03/20/Lord-of-the-root/eed6223d3cf8e90eed8493146c3419e.png" srcset="/img/loading.gif" lazyload></p>
+<p>获取服务器版本，发现是<code>i686</code>，也就是32位的架构</p>
+<p><img src="/2026/03/20/Lord-of-the-root/aae6d333356c64755afbee60cef9ee6.png" srcset="/img/loading.gif" lazyload></p>
+<p>在kali中cd到相关目录：<code>/usr/share/metasploit-framework/data/exploit/mysql</code></p>
+<p><img src="/2026/03/20/Lord-of-the-root/0eb43639335f0f7724be08ad767d2af.png" srcset="/img/loading.gif" lazyload></p>
+<p>选取32位的<code>lib_mysqludf_sys_32.so</code>文件，拷贝至相关文件夹下</p>
+<p><img src="/2026/03/20/Lord-of-the-root/e0321969a9b3644660fd476f76f4b63.png" srcset="/img/loading.gif" lazyload></p>
+<p>导入动态链接库，方法有多种，这里使用hex编码写UDF文件。使用命令：<code>xxd -ps udf.so | tr &#39;\n&#39; &#39;@&#39; | sed s/@//g</code>。<code>xxd</code>：用于把文件转换成十六进制(hex)格式，<code>-p</code>：以“纯hex字符串“输出，<code>-s</code>：表示连续输出，<code>tr &#39;\n&#39; &#39;@&#39;</code>：表示把多行的hex内容变成一行(用@代替换行)，<code>| sed s/@//g</code>：表示把刚刚的@全部删除，最终得到一整行的hex字符串。</p>
+<p><img src="/2026/03/20/Lord-of-the-root/10edd99988f8284839dfd0eef51d781.png" srcset="/img/loading.gif" lazyload></p>
+<p>靶机进入mysql服务，复制整行hex字符串再into dumpfile进去</p>
+<p><img src="/2026/03/20/Lord-of-the-root/472feb947f8500e59c53dfcc515527a.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2026/03/20/Lord-of-the-root/79a3a7eba5adf0808d2d612e2880d75.png" srcset="/img/loading.gif" lazyload></p>
+<p>创建<code>sys_eval</code>函数</p>
+<p><img src="/2026/03/20/Lord-of-the-root/61440fdb8119204933bfaa3625af5e6.png" srcset="/img/loading.gif" lazyload></p>
+<p>调用函数，可用</p>
+<p><img src="/2026/03/20/Lord-of-the-root/bebb2c169cc18eb10598150e9e65e29-1773996542694-30.png" srcset="/img/loading.gif" lazyload></p>
+<p>使用<code>sys_eval</code>函数将系统的默认bash shell复制到<code>/tmp</code>目录下，给<code>/tmp/shell</code>设置SUID权限，执行该文件后就能获取到root shell。</p>
+<p><img src="/2026/03/20/Lord-of-the-root/a15efdf3dba213e1d2c80e988ca3c9f.png" srcset="/img/loading.gif" lazyload></p>
+<p>提权后读取flag。</p>
+<p><img src="/2026/03/20/Lord-of-the-root/9e2b2498f9722918d2ba9bbfcf2a828.png" srcset="/img/loading.gif" lazyload></p>
+</h1></h1>
                 
               </div>
             
@@ -339,7 +404,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" class="category-chain-item">网络安全</a>
+  <a href="/categories/Vulnhub/" class="category-chain-item">Vulnhub</a>
   
   
 
@@ -354,7 +419,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" class="print-no-link">#渗透测试</a>
+        <a href="/tags/Vulnhub/" class="print-no-link">#Vulnhub</a>
       
     </div>
   
@@ -366,8 +431,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>对某学校的一次渗透测试</div>
-      <div>https://m0nst3rer.github.io/2026/01/26/对某学校的一次渗透测试/</div>
+      <div>Lord_of_the_root</div>
+      <div>https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/</div>
     </div>
     <div class="license-meta">
       
@@ -379,7 +444,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年1月26日</div>
+          <div>2026年3月20日</div>
         </div>
       
       
@@ -411,18 +476,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/03/20/Lord-of-the-root/" title="Lord_of_the_root">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Lord_of_the_root</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/01/22/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="记一次渗透测试">
-                        <span class="hidden-mobile">记一次渗透测试</span>
+                      <a href="/2026/01/26/%E5%AF%B9%E6%9F%90%E5%AD%A6%E6%A0%A1%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="对某学校的一次渗透测试">
+                        <span class="hidden-mobile">对某学校的一次渗透测试</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
