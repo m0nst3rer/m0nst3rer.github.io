@@ -19,12 +19,12 @@
   <meta name="author" content="m0nst3rer">
   <meta name="keywords" content="">
   
-    <meta name="description" content="信息收集  首先使用nmap进行初步探测  发现只开放了22和1337两个端口，进行UDP扫描  只有一个ssh端口开放，既然如此那连接看看  进来看到Knock就猜测需要进行端口敲门，那么使用knock进行端口敲门  浏览器访问  目录扫描发现&#x2F;404.html，接着访问  在源码中发现一串加密的字符串，看起来像是base64  尝试解码  SQL注入  得到隐藏信息：&#x2F;978345210&#x2F;in">
+    <meta name="description" content="信息收集  首先使用nmap进行初步探测  发现只开放了22和1337两个端口，进行UDP扫描  只有一个ssh端口开放，尝试连接  进来看到Knock猜测需要进行端口敲门，那么使用knock进行端口敲门  浏览器访问  目录扫描发现&#x2F;404.html，接着访问  在源码中发现一串加密的字符串，看起来像是base64  尝试解码  SQL注入  得到隐藏信息：&#x2F;978345210&#x2F;index.ph">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Lord_of_the_root">
 <meta property="og:url" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/index.html">
 <meta property="og:site_name" content="m0nst3rer&#39;Blog">
-<meta property="og:description" content="信息收集  首先使用nmap进行初步探测  发现只开放了22和1337两个端口，进行UDP扫描  只有一个ssh端口开放，既然如此那连接看看  进来看到Knock就猜测需要进行端口敲门，那么使用knock进行端口敲门  浏览器访问  目录扫描发现&#x2F;404.html，接着访问  在源码中发现一串加密的字符串，看起来像是base64  尝试解码  SQL注入  得到隐藏信息：&#x2F;978345210&#x2F;in">
+<meta property="og:description" content="信息收集  首先使用nmap进行初步探测  发现只开放了22和1337两个端口，进行UDP扫描  只有一个ssh端口开放，尝试连接  进来看到Knock猜测需要进行端口敲门，那么使用knock进行端口敲门  浏览器访问  目录扫描发现&#x2F;404.html，接着访问  在源码中发现一串加密的字符串，看起来像是base64  尝试解码  SQL注入  得到隐藏信息：&#x2F;978345210&#x2F;index.ph">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/51d32c05a8353bc4e72b5b2b4c26781.png">
 <meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/340b83c917f3d54b1268ea0d5b3f837.png">
@@ -60,7 +60,7 @@
 <meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/a15efdf3dba213e1d2c80e988ca3c9f.png">
 <meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/9e2b2498f9722918d2ba9bbfcf2a828.png">
 <meta property="article:published_time" content="2026-03-20T07:35:51.000Z">
-<meta property="article:modified_time" content="2026-03-20T08:55:13.240Z">
+<meta property="article:modified_time" content="2026-03-20T12:18:34.744Z">
 <meta property="article:author" content="m0nst3rer">
 <meta property="article:tag" content="Vulnhub">
 <meta name="twitter:card" content="summary_large_image">
@@ -261,7 +261,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          239 字
+          760 字
         
       </span>
     
@@ -272,7 +272,7 @@
         
         
         
-          2 分钟
+          7 分钟
         
       </span>
     
@@ -320,9 +320,9 @@
 <p><img src="/2026/03/20/Lord-of-the-root/51d32c05a8353bc4e72b5b2b4c26781.png" srcset="/img/loading.gif" lazyload></p>
 <p>发现只开放了22和1337两个端口，进行UDP扫描</p>
 <p><img src="/2026/03/20/Lord-of-the-root/340b83c917f3d54b1268ea0d5b3f837.png" srcset="/img/loading.gif" lazyload></p>
-<p>只有一个ssh端口开放，既然如此那连接看看</p>
+<p>只有一个ssh端口开放，尝试连接</p>
 <p><img src="/2026/03/20/Lord-of-the-root/365b5445f2b80ff1428ab5575e45b72.png" srcset="/img/loading.gif" lazyload></p>
-<p>进来看到<code>Knock</code>就猜测需要进行端口敲门，那么使用<code>knock</code>进行端口敲门</p>
+<p>进来看到<code>Knock</code>猜测需要进行端口敲门，那么使用<code>knock</code>进行端口敲门</p>
 <p><img src="/2026/03/20/Lord-of-the-root/image-20260320154155949.png" srcset="/img/loading.gif" lazyload></p>
 <p>浏览器访问</p>
 <p><img src="/2026/03/20/Lord-of-the-root/518fd0cac1ba0bb222f1f824f4c7d2e.png" srcset="/img/loading.gif" lazyload></p>
@@ -345,18 +345,21 @@
 <p><img src="/2026/03/20/Lord-of-the-root/3b46e338b90f4740dbd354ecc0f2c0b.png" srcset="/img/loading.gif" lazyload></p>
 <p>发现存在<code>password</code>和<code>username</code>两个字段，那么直接dump下来</p>
 <p><img src="/2026/03/20/Lord-of-the-root/a7dedc79c687e52320a31a63d7b3ffe.png" srcset="/img/loading.gif" lazyload></p>
-<h1>内核提权<h1 <p>得到五个用户的用户名以及密码，拿下来整理一下做成字典进行爆破<p></p>
+<p>得到五个用户的用户名以及密码，拿下来整理一下做成字典进行爆破</p>
 <p><img src="/2026/03/20/Lord-of-the-root/e78f13fcbf26d4467f5eadf8f019aa9.png" srcset="/img/loading.gif" lazyload></p>
+<h1>内核提权</h1>
+
 <p>进行ssh爆破，得到登录凭据：<code>smeagol/MyPreciousR00t</code></p>
 <p><img src="/2026/03/20/Lord-of-the-root/image-20260320155715166.png" srcset="/img/loading.gif" lazyload></p>
 <p>登录后上传<code>linpeas.sh</code>辅助提权脚本，发现内核版本挺低</p>
 <p><img src="/2026/03/20/Lord-of-the-root/image-20260320160155351.png" srcset="/img/loading.gif" lazyload></p>
-<p>searchsploit找到对应的exp，靶机wget下来进行提权</p>
+<p>searchsploit找到<code>Ubuntu 14.04</code>，使用编号<code>39166.c</code>exp传到靶机上执行</p>
 <p><img src="/2026/03/20/Lord-of-the-root/fdb890d1341405d3a4ed8c7e0965f8d.png" srcset="/img/loading.gif" lazyload></p>
 <p>成功提权至root用户</p>
 <h1>UDF提权</h1>
 
-<p>UDF（user defind function）用户自定义函数，通过添加新函数，对MySQL的功能进行扩充。调用方式与一般系统自带的函数相同，例如user()，version()等函数。udf 文件后缀在windows与linux系统下分别为dll与so，即动态链接库文件，由C、C++编写。</p>
+<h5>UDF（user defind function）用户自定义函数，通过添加新函数，对MySQL的功能进行扩充。调用方式与一般系统自带的函数相同，例如user()，version()等函数。udf 文件后缀在windows与linux系统下分别为dll与so，即动态链接库文件，由C、C++编写。</h5>
+
 <p>netstat发现开放3306端口</p>
 <p><img src="/2026/03/20/Lord-of-the-root/0b03566ada39fa881202c17b595b022.png" srcset="/img/loading.gif" lazyload></p>
 <p>翻找数据库配置文件，得到登录账户和密码：<code>root/darkshadow</code></p>
@@ -386,7 +389,15 @@
 <p><img src="/2026/03/20/Lord-of-the-root/a15efdf3dba213e1d2c80e988ca3c9f.png" srcset="/img/loading.gif" lazyload></p>
 <p>提权后读取flag。</p>
 <p><img src="/2026/03/20/Lord-of-the-root/9e2b2498f9722918d2ba9bbfcf2a828.png" srcset="/img/loading.gif" lazyload></p>
-</h1></h1>
+<h1>总结</h1>
+
+<h5>攻击流程：knock端口敲门-->网页源码信息泄露-->解密获取隐藏目录-->SQL时间盲注-->ssh暴力破解-->CVE-2015-8660内核提权漏洞/UDF提权-->cat flag</h5>
+
+<h5>参考文章：https://www.cnblogs.com/jtmqd/p/17795386.html
+    https://blog.csdn.net/m0_62484818/article/details/143591548
+</h5>
+
+
                 
               </div>
             
