@@ -19,12 +19,12 @@
   <meta name="author" content="m0nst3rer">
   <meta name="keywords" content="">
   
-    <meta name="description" content="前言  一般对于统一认证门户是不好打的，并且目前防护方面都做的挺完善了。本次遇到的案例也是运气，由于重定向没有做好进而可以直接登录后台打出高危漏洞。 正文  前期通过信息收集找到该院校的统一认证门户  但是注意到访问的瞬间会跳出类似若依的后台管理登录界面，想办法让它在加载的瞬间停留，直接按左上角的叉号，否则会重定向到统一身份认证登录页。  可以看到成功停在了某个后台登录页面，账号密码自动填充好了，">
+    <meta name="description" content="前言一般对于统一认证门户是不好打的，并且目前防护方面都做的挺完善了。本次遇到的案例也是运气，由于重定向没有做好进而可以直接登录后台打出高危漏洞。 正文前期通过信息收集找到该院校的统一认证门户  但是注意到访问的瞬间会跳出类似若依的后台管理登录界面，想办法让它在加载的瞬间停留，直接按左上角的叉号，否则会重定向到统一身份认证登录页。  可以看到成功停在了某个后台登录页面，账号密码自动填充好了，若想看密">
 <meta property="og:type" content="article">
 <meta property="og:title" content="某高校统一认证门户系统绕过">
 <meta property="og:url" content="https://m0nst3rer.github.io/2025/06/19/%E6%9F%90%E9%AB%98%E6%A0%A1%E7%BB%9F%E4%B8%80%E8%AE%A4%E8%AF%81%E9%97%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%E7%BB%95%E8%BF%87/index.html">
 <meta property="og:site_name" content="m0nst3rer&#39;Blog">
-<meta property="og:description" content="前言  一般对于统一认证门户是不好打的，并且目前防护方面都做的挺完善了。本次遇到的案例也是运气，由于重定向没有做好进而可以直接登录后台打出高危漏洞。 正文  前期通过信息收集找到该院校的统一认证门户  但是注意到访问的瞬间会跳出类似若依的后台管理登录界面，想办法让它在加载的瞬间停留，直接按左上角的叉号，否则会重定向到统一身份认证登录页。  可以看到成功停在了某个后台登录页面，账号密码自动填充好了，">
+<meta property="og:description" content="前言一般对于统一认证门户是不好打的，并且目前防护方面都做的挺完善了。本次遇到的案例也是运气，由于重定向没有做好进而可以直接登录后台打出高危漏洞。 正文前期通过信息收集找到该院校的统一认证门户  但是注意到访问的瞬间会跳出类似若依的后台管理登录界面，想办法让它在加载的瞬间停留，直接按左上角的叉号，否则会重定向到统一身份认证登录页。  可以看到成功停在了某个后台登录页面，账号密码自动填充好了，若想看密">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://m0nst3rer.github.io/2025/06/19/%E6%9F%90%E9%AB%98%E6%A0%A1%E7%BB%9F%E4%B8%80%E8%AE%A4%E8%AF%81%E9%97%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%E7%BB%95%E8%BF%87/image-20260119220457004.png">
 <meta property="og:image" content="https://m0nst3rer.github.io/2025/06/19/%E6%9F%90%E9%AB%98%E6%A0%A1%E7%BB%9F%E4%B8%80%E8%AE%A4%E8%AF%81%E9%97%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%E7%BB%95%E8%BF%87/image-20260119221155176.png">
@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://m0nst3rer.github.io/2025/06/19/%E6%9F%90%E9%AB%98%E6%A0%A1%E7%BB%9F%E4%B8%80%E8%AE%A4%E8%AF%81%E9%97%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%E7%BB%95%E8%BF%87/image-20260119233902796.png">
 <meta property="og:image" content="https://m0nst3rer.github.io/2025/06/19/%E6%9F%90%E9%AB%98%E6%A0%A1%E7%BB%9F%E4%B8%80%E8%AE%A4%E8%AF%81%E9%97%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%E7%BB%95%E8%BF%87/image-20260120163528599.png">
 <meta property="article:published_time" content="2025-06-19T13:54:14.000Z">
-<meta property="article:modified_time" content="2026-01-25T16:49:19.643Z">
+<meta property="article:modified_time" content="2026-03-24T07:28:11.146Z">
 <meta property="article:author" content="m0nst3rer">
 <meta property="article:tag" content="渗透测试">
 <meta name="twitter:card" content="summary_large_image">
@@ -289,12 +289,8 @@
             
               <div class="markdown-body">
                 
-                <h1>前言</h1>
-
-<p>一般对于统一认证门户是不好打的，并且目前防护方面都做的挺完善了。本次遇到的案例也是运气，由于重定向没有做好进而可以直接登录后台打出高危漏洞。</p>
-<h1>正文</h1>
-
-<p>前期通过信息收集找到该院校的统一认证门户</p>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一般对于统一认证门户是不好打的，并且目前防护方面都做的挺完善了。本次遇到的案例也是运气，由于重定向没有做好进而可以直接登录后台打出高危漏洞。</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>前期通过信息收集找到该院校的统一认证门户</p>
 <p><img src="/2025/06/19/%E6%9F%90%E9%AB%98%E6%A0%A1%E7%BB%9F%E4%B8%80%E8%AE%A4%E8%AF%81%E9%97%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%E7%BB%95%E8%BF%87/image-20260119220457004.png" srcset="/img/loading.gif" lazyload></p>
 <p>但是注意到访问的瞬间会跳出类似若依的后台管理登录界面，想办法让它在加载的瞬间停留，直接按左上角的叉号，否则会重定向到统一身份认证登录页。</p>
 <p><img src="/2025/06/19/%E6%9F%90%E9%AB%98%E6%A0%A1%E7%BB%9F%E4%B8%80%E8%AE%A4%E8%AF%81%E9%97%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%E7%BB%95%E8%BF%87/image-20260119221155176.png" srcset="/img/loading.gif" lazyload></p>
@@ -306,17 +302,13 @@
 <p><img src="/2025/06/19/%E6%9F%90%E9%AB%98%E6%A0%A1%E7%BB%9F%E4%B8%80%E8%AE%A4%E8%AF%81%E9%97%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%E7%BB%95%E8%BF%87/image-20260119222657830.png" srcset="/img/loading.gif" lazyload></p>
 <p>发现某个事件审批界面</p>
 <p><img src="/2025/06/19/%E6%9F%90%E9%AB%98%E6%A0%A1%E7%BB%9F%E4%B8%80%E8%AE%A4%E8%AF%81%E9%97%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%E7%BB%95%E8%BF%87/image-20260119230244882.png" srcset="/img/loading.gif" lazyload></p>
-<h1>SQL注入</h1>
-
-<p>通过对该院校的信息收集，得到学生学号等信息，再用FOFA、Hunter等搜索引擎找到某处类似学生宿舍管理系统的登录界面</p>
+<h2 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h2><p>通过对该院校的信息收集，得到学生学号等信息，再用FOFA、Hunter等搜索引擎找到某处类似学生宿舍管理系统的登录界面</p>
 <p><img src="/2025/06/19/%E6%9F%90%E9%AB%98%E6%A0%A1%E7%BB%9F%E4%B8%80%E8%AE%A4%E8%AF%81%E9%97%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%E7%BB%95%E8%BF%87/image-20260119233902796.png" srcset="/img/loading.gif" lazyload></p>
 <p>通过浏览器插件识别得知该处登录页采用<code>.NET</code>框架，那么考虑进行SQL注入尝试</p>
 <p><img src="/2025/06/19/%E6%9F%90%E9%AB%98%E6%A0%A1%E7%BB%9F%E4%B8%80%E8%AE%A4%E8%AF%81%E9%97%A8%E6%88%B7%E7%B3%BB%E7%BB%9F%E7%BB%95%E8%BF%87/image-20260120163528599.png" srcset="/img/loading.gif" lazyload></p>
 <p>运气很好直接得到user值为<code>dbo</code>且没有<code>WAF</code>进行拦截，但是由于怕动静太大就不上<code>SQLmap</code>了，证明有注入点即可</p>
-<h1>结尾</h1>
-
-<p>以上漏洞均已提交至EDUSRC，另外，在渗透测试中需要做到细心且耐心，慢慢来！</p>
-<p>文章中涉及的程序(方法)可能带有攻击性，仅供安全研究与教学之用，读者将其信息做其他用途，由用户承担全部法律及连带责任，文章作者不承担任何法律及连带责任，本人坚决反对利用文章内容进行恶意攻击行为，推荐大家在了解技术原理的前提下，更好的维护个人信息安全、企业安全、国家安全，本文内容未隐讳任何个人、群体、公司。非文学作品，请勿过度理解，根据《计算机软件保护条例》第十七条，本站所有软件请仅用于学习研究用途。</p>
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>以上漏洞均已提交至EDUSRC，另外，在渗透测试中需要做到细心且耐心，慢慢来！</p>
+<p><strong>文章中涉及的程序(方法)可能带有攻击性，仅供安全研究与教学之用，读者将其信息做其他用途，由用户承担全部法律及连带责任，文章作者不承担任何法律及连带责任，本人坚决反对利用文章内容进行恶意攻击行为，推荐大家在了解技术原理的前提下，更好的维护个人信息安全、企业安全、国家安全，本文内容未隐讳任何个人、群体、公司。非文学作品，请勿过度理解，根据《计算机软件保护条例》第十七条，本站所有软件请仅用于学习研究用途。</strong></p>
 
                 
               </div>

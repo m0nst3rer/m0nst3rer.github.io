@@ -107,12 +107,14 @@ Fluid.events = {
       });
     });
     // Click
-    topArrow.on('click', function() {
-      jQuery('body,html').animate({
-        scrollTop: 0,
-        easing   : 'swing'
-      });
-    });
+    document.getElementById('scroll-top-button').addEventListener('click', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
   },
 
   registerImageLoadedEvent: function() {
