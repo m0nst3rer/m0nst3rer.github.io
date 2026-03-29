@@ -19,12 +19,12 @@
   <meta name="author" content="m0nst3rer">
   <meta name="keywords" content="">
   
-    <meta name="description" content="使用nmap和arp-scan进行基础的信息收集，根据arp-scan的主机存活探测知道192.168.182.186为靶机地址，sudo nmap --script&#x3D;vuln 192.168.182.186进行漏洞脚本扫描  可以看到开放了80和22两个端口，接下来使用gobuster进行目录扫描，sudo gobuster dir -u http:&#x2F;&#x2F;192.168.182.186 -w &#x2F;u">
+    <meta name="description" content="信息收集使用nmap和arp-scan进行基础的信息收集 12sudo arp-scan -l &#x2F;&#x2F; 主机存活探测sudo nmap -script&#x3D;vuln 192.168.182.186 &#x2F;&#x2F; nmap漏洞脚本扫描   可以看到开放了80和22两个端口，接下来使用gobuster进行目录扫描 1sudo gobuster dir -u http:&#x2F;&#x2F;192.168.182.186 -w &#x2F;us">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Momentum1">
 <meta property="og:url" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/index.html">
 <meta property="og:site_name" content="m0nst3rer&#39;Blog">
-<meta property="og:description" content="使用nmap和arp-scan进行基础的信息收集，根据arp-scan的主机存活探测知道192.168.182.186为靶机地址，sudo nmap --script&#x3D;vuln 192.168.182.186进行漏洞脚本扫描  可以看到开放了80和22两个端口，接下来使用gobuster进行目录扫描，sudo gobuster dir -u http:&#x2F;&#x2F;192.168.182.186 -w &#x2F;u">
+<meta property="og:description" content="信息收集使用nmap和arp-scan进行基础的信息收集 12sudo arp-scan -l &#x2F;&#x2F; 主机存活探测sudo nmap -script&#x3D;vuln 192.168.182.186 &#x2F;&#x2F; nmap漏洞脚本扫描   可以看到开放了80和22两个端口，接下来使用gobuster进行目录扫描 1sudo gobuster dir -u http:&#x2F;&#x2F;192.168.182.186 -w &#x2F;us">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/image-20260118204719965.png">
 <meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/image-20260118205054142.png">
@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/image-20260118210925884.png">
 <meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Momentum1/image-20260118211118543.png">
 <meta property="article:published_time" content="2025-01-18T12:40:03.000Z">
-<meta property="article:modified_time" content="2026-01-18T13:57:20.218Z">
+<meta property="article:modified_time" content="2026-03-29T02:14:20.358Z">
 <meta property="article:author" content="m0nst3rer">
 <meta property="article:tag" content="Vulnhub">
 <meta name="twitter:card" content="summary_large_image">
@@ -239,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          396 字
+          384 字
         
       </span>
     
@@ -292,9 +292,13 @@
             
               <div class="markdown-body">
                 
-                <p>使用<code>nmap</code>和<code>arp-scan</code>进行基础的信息收集，根据<code>arp-scan</code>的主机存活探测知道<code>192.168.182.186</code>为靶机地址，<code>sudo nmap --script=vuln 192.168.182.186</code>进行漏洞脚本扫描</p>
+                <h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><p>使用<code>nmap</code>和<code>arp-scan</code>进行基础的信息收集</p>
+<figure class="highlight gml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gml">sudo arp-scan -l <span class="hljs-comment">// 主机存活探测</span><br>sudo nmap -<span class="hljs-variable language_">script</span>=vuln <span class="hljs-number">192.168</span><span class="hljs-number">.182</span><span class="hljs-number">.186</span> <span class="hljs-comment">// nmap漏洞脚本扫描</span><br></code></pre></td></tr></table></figure>
+
 <p><img src="/2025/01/18/Momentum1/image-20260118204719965.png" srcset="/img/loading.gif" lazyload></p>
-<p>可以看到开放了80和22两个端口，接下来使用<code>gobuster</code>进行目录扫描，<code>sudo gobuster dir -u http://192.168.182.186 -w /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -x php,txt,html,bak,zip</code>，通过<code>-x</code>参数添加更多文件后缀进行Fuzz</p>
+<p>可以看到开放了80和22两个端口，接下来使用<code>gobuster</code>进行目录扫描</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">sudo gobuster dir -u http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">182.186</span> -w <span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/dirbuster/</span>wordlists<span class="hljs-regexp">/directory-list-2.3-medium.txt -x php,txt,html,bak,zip /</span>/ -x：指定扫描的文件后缀类型<br></code></pre></td></tr></table></figure>
+
 <p><img src="/2025/01/18/Momentum1/image-20260118205054142.png" srcset="/img/loading.gif" lazyload></p>
 <p>可以看到扫出挺多东西，那么先访问80端口看看</p>
 <p><img src="/2025/01/18/Momentum1/image-20260118205540630.png" srcset="/img/loading.gif" lazyload></p>
@@ -310,13 +314,11 @@
 <p><img src="/2025/01/18/Momentum1/image-20260118210551039.png" srcset="/img/loading.gif" lazyload></p>
 <p>对Cookie值进行AES解密，得到凭据<code>auxerre-alienum##</code>，估计就是ssh的登录凭证了</p>
 <p><img src="/2025/01/18/Momentum1/image-20260118210712681.png" srcset="/img/loading.gif" lazyload></p>
-<p>登录成功，试了几次才发现一整串才是密码，拿到<code>user.txt</code>flag，后面继续进行提权</p>
+<h2 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h2><p>登录成功，试了几次才发现一整串才是密码，拿到<code>user.txt</code>flag，后面继续进行提权</p>
 <p><img src="/2025/01/18/Momentum1/image-20260118210925884.png" srcset="/img/loading.gif" lazyload></p>
 <p>发现了<code>.rediscli_history</code>，说明有redis服务，进去看看也是拿到了<code>rootpass</code>，那么直接切换root账户就行</p>
 <p><img src="/2025/01/18/Momentum1/image-20260118211118543.png" srcset="/img/loading.gif" lazyload></p>
-<h3>总结</h3>
-
-<p>使用<code>nmap</code>和<code>arp-scan</code>进行基础信息收集；<code>gobuster</code>进行目录扫描；XSS弹Cookie；解密拿到ssh登录凭证；redis-cli拿到rootpass；切换至root账户获取最终Flag。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>使用<code>nmap</code>和<code>arp-scan</code>进行基础信息收集；<code>gobuster</code>进行目录扫描；XSS弹Cookie；解密拿到ssh登录凭证；redis-cli拿到rootpass；切换至root账户获取最终Flag。</strong></p>
 
                 
               </div>

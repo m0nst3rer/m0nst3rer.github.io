@@ -19,12 +19,12 @@
   <meta name="author" content="m0nst3rer">
   <meta name="keywords" content="">
   
-    <meta name="description" content="arp-scan -l探测到192.168.182.152为靶机地址 分别使用sudo nmap -sT --min-rate&#x3D;10000 192.168.182.152，sudo nmap -sC -sV -O -Pn -n -p22,80 192.168.182.152，sudo nmap --script&#x3D;vuln -Pn -n 192.168.182.152三条命令进行端口扫描，漏洞脚本扫">
+    <meta name="description" content="arp-scan -l探测到192.168.182.152为靶机地址 123sudo nmap -sT --min-rate&#x3D;10000 192.168.182.152  &#x2F;&#x2F;快速TCP扫描sudo nmap -sC -sV -O -Pn -n -p22,80 192.168.182.152 &#x2F;&#x2F;-sC：默认脚本扫描，-sV：版本探测，-O：操作系统探测，-Pn：跳过主机探测，-n：禁用DNS解析">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Narak">
 <meta property="og:url" content="https://m0nst3rer.github.io/2025/01/18/Narak/index.html">
 <meta property="og:site_name" content="m0nst3rer&#39;Blog">
-<meta property="og:description" content="arp-scan -l探测到192.168.182.152为靶机地址 分别使用sudo nmap -sT --min-rate&#x3D;10000 192.168.182.152，sudo nmap -sC -sV -O -Pn -n -p22,80 192.168.182.152，sudo nmap --script&#x3D;vuln -Pn -n 192.168.182.152三条命令进行端口扫描，漏洞脚本扫">
+<meta property="og:description" content="arp-scan -l探测到192.168.182.152为靶机地址 123sudo nmap -sT --min-rate&#x3D;10000 192.168.182.152  &#x2F;&#x2F;快速TCP扫描sudo nmap -sC -sV -O -Pn -n -p22,80 192.168.182.152 &#x2F;&#x2F;-sC：默认脚本扫描，-sV：版本探测，-O：操作系统探测，-Pn：跳过主机探测，-n：禁用DNS解析">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118230332726.png">
 <meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118230724101.png">
@@ -47,7 +47,7 @@
 <meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118234121930.png">
 <meta property="og:image" content="https://m0nst3rer.github.io/2025/01/18/Narak/image-20260118234145847.png">
 <meta property="article:published_time" content="2025-01-18T14:58:10.000Z">
-<meta property="article:modified_time" content="2026-01-18T15:46:41.555Z">
+<meta property="article:modified_time" content="2026-03-29T01:54:38.995Z">
 <meta property="article:author" content="m0nst3rer">
 <meta property="article:tag" content="Vulnhub">
 <meta name="twitter:card" content="summary_large_image">
@@ -248,7 +248,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          730 字
+          754 字
         
       </span>
     
@@ -302,7 +302,10 @@
               <div class="markdown-body">
                 
                 <p><code>arp-scan -l</code>探测到<code>192.168.182.152</code>为靶机地址</p>
-<p>分别使用<code>sudo nmap -sT --min-rate=10000 192.168.182.152</code>，<code>sudo nmap -sC -sV -O -Pn -n -p22,80 192.168.182.152</code>，<code>sudo nmap --script=vuln -Pn -n 192.168.182.152</code>三条命令进行端口扫描，漏洞脚本扫描和详细信息扫描</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> nmap -sT --min-rate=10000 192.168.182.152  //快速TCP扫描<br><span class="hljs-built_in">sudo</span> nmap -sC -sV -O -Pn -n -p22,80 192.168.182.152 //-sC：默认脚本扫描，-sV：版本探测，-O：操作系统探测，-Pn：跳过主机探测，-n：禁用DNS解析，-p：指定扫描端口<br><span class="hljs-built_in">sudo</span> nmap --script=vuln -Pn -n 192.168.182.152  //使用漏洞脚本扫描<br></code></pre></td></tr></table></figure>
+
+
+
 <p><img src="/2025/01/18/Narak/image-20260118230332726.png" srcset="/img/loading.gif" lazyload></p>
 <p>使用<code>sudo nmap -sU --top-ports 20 192.168.182.152</code>对使用频率最高的20个端口进行UDP扫描，发现开放了<code>tftp</code>服务，先做好记录万一后面用得上。继续进行常规目录扫描<code>sudo dirb http://192.168.182.152</code></p>
 <p><img src="/2025/01/18/Narak/image-20260118230724101.png" srcset="/img/loading.gif" lazyload></p>
@@ -325,7 +328,8 @@
 <p>得到一个凭据，尝试登录ssh失败，那应该是webdav的登录凭据了，尝试登录webdav成功</p>
 <p><img src="/2025/01/18/Narak/image-20260118232027978.png" srcset="/img/loading.gif" lazyload></p>
 <p>再利用<code>devtest</code>检测一下它能干嘛</p>
-<p><code>davtest -url http://192.168.182.152/webdav -auth yamdoot:Swarg</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">davtest -url http://192.168.182.152/webdav -auth yamdoot:Swarg<br></code></pre></td></tr></table></figure>
+
 <p><img src="/2025/01/18/Narak/image-20260118232206609.png" srcset="/img/loading.gif" lazyload></p>
 <p>可以看到能使用PUT请求进行文件上传操作，那么大致思路就是传个一句话木马上去进行getshell，利用<code>cadaver</code>工具进行上传，<code>cadaver http://192.168.182.152/webdav</code>，输入登录凭证后<code>put shell.php</code>即可</p>
 <p><img src="/2025/01/18/Narak/image-20260118232528767.png" srcset="/img/loading.gif" lazyload></p>
@@ -345,7 +349,7 @@
 <p><img src="/2025/01/18/Narak/image-20260118234145847.png" srcset="/img/loading.gif" lazyload></p>
 <h3>总结</h3>
 
-<p>前期利用<code>nmap、dirb、gobuster</code>工具进行端口扫描和目扫描；在tftp服务中拿到<code>creds.txt</code>中的<code>webdav</code>登录凭证信息；利用<code>cadaver</code>工具进行PUT传木马上去获得立足点；<code>hell.sh</code>解密拿到ssh登录凭证；组合用户名和密码爆破ssh；写入00-header提权逻辑进行提权获取最终的Flag</p>
+<p><strong>前期利用<code>nmap、dirb、gobuster</code>工具进行端口扫描和目扫描；在tftp服务中拿到<code>creds.txt</code>中的<code>webdav</code>登录凭证信息；利用<code>cadaver</code>工具进行PUT传木马上去获得立足点；<code>hell.sh</code>解密拿到ssh登录凭证；组合用户名和密码爆破ssh；写入00-header提权逻辑进行提权获取最终的Flag</strong></p>
 
                 
               </div>

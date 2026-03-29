@@ -231,6 +231,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2026/03/28/Tr0ll2/" target="_self">
+          Tr0ll2
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2026/03/28/Tr0ll2/" target="_self">
+        <div>
+          信息收集首先使用nmap进行初步信息收集 12345sudo nmap -Pn --min-rate 10000 192.168.111.20   //跳过主机扫描，把发包速率调至10000sudo nmap -sT -sV-p---min-rate 10000 192.168.111.20   //全端口TCP服务扫描sudo nmap --top-ports 20 192.168.111.20
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2026-03-28 23:22" pubdate>
+              2026-03-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/type/" class="category-chain-item">type</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Vulnhub/">#Vulnhub</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2026/03/20/Lord-of-the-root/" target="_self">
           Lord_of_the_root
         </a>
@@ -239,7 +300,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2026/03/20/Lord-of-the-root/" target="_self">
         <div>
-          信息收集首先使用nmap进行初步探测  发现只开放了22和1337两个端口，进行UDP扫描  只有一个ssh端口开放，尝试连接  进来看到Knock猜测需要进行端口敲门，那么使用knock进行端口敲门  浏览器访问  目录扫描发现/404.html，接着访问  在源码中发现一串加密的字符串，看起来像是base64  尝试解码  SQL注入得到隐藏信息：/978345210/index.php，接着
+          信息收集首先使用nmap进行初步探测 1sudo nmap -sS -sV -T5 -A -p- -Pn --min-rate 1000 192.168.111.20   发现只开放了22和1337两个端口，进行UDP扫描 1sudo nmap --top-ports 20 192.168.111.20   只有一个ssh端口开放，尝试连接  进来看到Knock猜测需要进行端口敲门，那么使用kno
         </div>
       </a>
 
@@ -422,7 +483,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2026/01/19/Orasi/" target="_self">
         <div>
-          首先使用arp-scan探测目标机器，发现IP地址为192.168.182.228  先用sudo nmap --min-rate 10000 192.168.182.228进行一个快速扫描，知道开放了以下几个端口  利用gobuster进行目录扫描，sudo gobuster dir -u http://192.168.182.228 -w /usr/share/wordlists/dirbus
+          信息收集首先使用arp-scan探测目标机器，发现IP地址为192.168.182.228  先用nmap进行一个快速扫描，知道开放了以下几个端口 1sudo nmap --min-rate 10000 192.168.182.228   利用gobuster进行目录扫描，但是并没有发现有价值的信息 1sudo gobuster dir -u http://192.168.182.228 -w /
         </div>
       </a>
 
@@ -605,7 +666,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/01/18/Narak/" target="_self">
         <div>
-          arp-scan -l探测到192.168.182.152为靶机地址 分别使用sudo nmap -sT --min-rate=10000 192.168.182.152，sudo nmap -sC -sV -O -Pn -n -p22,80 192.168.182.152，sudo nmap --script=vuln -Pn -n 192.168.182.152三条命令进行端口扫描，漏洞脚本扫
+          arp-scan -l探测到192.168.182.152为靶机地址 123sudo nmap -sT --min-rate=10000 192.168.182.152  //快速TCP扫描sudo nmap -sC -sV -O -Pn -n -p22,80 192.168.182.152 //-sC：默认脚本扫描，-sV：版本探测，-O：操作系统探测，-Pn：跳过主机探测，-n：禁用DNS解析
         </div>
       </a>
 
@@ -666,7 +727,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/01/18/Momentum2/" target="_self">
         <div>
-          arp-scan -l发现靶机地址为192.168.182.173 sudo nmap --script=vuln 192.168.182.173进行漏洞脚本扫描  sudo nmap -sT -A -O -p- --min-rate=10000 192.168.182.173进行详细信息扫描，看到开放了80和22两个端口  sudo gobuster dir -u http://192.168.
+          信息收集先用arp-scan找到靶机地址，再用nmap扫描 12sudo arp-scan -lsudo nmap --script=vuln 192.168.182.173     进行详细信息扫描，看到开放了80和22两个端口 1sudo nmap -sT -A -O -p- --min-rate=10000 192.168.182.173  // -sT：TCP扫描，-A：激进扫描，版本探测
         </div>
       </a>
 
@@ -727,7 +788,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2025/01/18/Momentum1/" target="_self">
         <div>
-          使用nmap和arp-scan进行基础的信息收集，根据arp-scan的主机存活探测知道192.168.182.186为靶机地址，sudo nmap --script=vuln 192.168.182.186进行漏洞脚本扫描  可以看到开放了80和22两个端口，接下来使用gobuster进行目录扫描，sudo gobuster dir -u http://192.168.182.186 -w /u
+          信息收集使用nmap和arp-scan进行基础的信息收集 12sudo arp-scan -l // 主机存活探测sudo nmap -script=vuln 192.168.182.186 // nmap漏洞脚本扫描   可以看到开放了80和22两个端口，接下来使用gobuster进行目录扫描 1sudo gobuster dir -u http://192.168.182.186 -w /us
         </div>
       </a>
 

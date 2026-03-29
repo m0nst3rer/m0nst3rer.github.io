@@ -19,12 +19,12 @@
   <meta name="author" content="m0nst3rer">
   <meta name="keywords" content="">
   
-    <meta name="description" content="信息收集首先使用nmap进行初步探测  发现只开放了22和1337两个端口，进行UDP扫描  只有一个ssh端口开放，尝试连接  进来看到Knock猜测需要进行端口敲门，那么使用knock进行端口敲门  浏览器访问  目录扫描发现&#x2F;404.html，接着访问  在源码中发现一串加密的字符串，看起来像是base64  尝试解码  SQL注入得到隐藏信息：&#x2F;978345210&#x2F;index.php，接着">
+    <meta name="description" content="信息收集首先使用nmap进行初步探测 1sudo nmap -sS -sV -T5 -A -p- -Pn --min-rate 1000 192.168.111.20   发现只开放了22和1337两个端口，进行UDP扫描 1sudo nmap --top-ports 20 192.168.111.20   只有一个ssh端口开放，尝试连接  进来看到Knock猜测需要进行端口敲门，那么使用kno">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Lord_of_the_root">
 <meta property="og:url" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/index.html">
 <meta property="og:site_name" content="m0nst3rer&#39;Blog">
-<meta property="og:description" content="信息收集首先使用nmap进行初步探测  发现只开放了22和1337两个端口，进行UDP扫描  只有一个ssh端口开放，尝试连接  进来看到Knock猜测需要进行端口敲门，那么使用knock进行端口敲门  浏览器访问  目录扫描发现&#x2F;404.html，接着访问  在源码中发现一串加密的字符串，看起来像是base64  尝试解码  SQL注入得到隐藏信息：&#x2F;978345210&#x2F;index.php，接着">
+<meta property="og:description" content="信息收集首先使用nmap进行初步探测 1sudo nmap -sS -sV -T5 -A -p- -Pn --min-rate 1000 192.168.111.20   发现只开放了22和1337两个端口，进行UDP扫描 1sudo nmap --top-ports 20 192.168.111.20   只有一个ssh端口开放，尝试连接  进来看到Knock猜测需要进行端口敲门，那么使用kno">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/51d32c05a8353bc4e72b5b2b4c26781.png">
 <meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/340b83c917f3d54b1268ea0d5b3f837.png">
@@ -60,7 +60,7 @@
 <meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/a15efdf3dba213e1d2c80e988ca3c9f.png">
 <meta property="og:image" content="https://m0nst3rer.github.io/2026/03/20/Lord-of-the-root/9e2b2498f9722918d2ba9bbfcf2a828.png">
 <meta property="article:published_time" content="2026-03-20T07:35:51.000Z">
-<meta property="article:modified_time" content="2026-03-24T07:24:10.573Z">
+<meta property="article:modified_time" content="2026-03-29T02:30:11.950Z">
 <meta property="article:author" content="m0nst3rer">
 <meta property="article:tag" content="Vulnhub">
 <meta name="twitter:card" content="summary_large_image">
@@ -261,7 +261,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          760 字
+          793 字
         
       </span>
     
@@ -315,8 +315,12 @@
               <div class="markdown-body">
                 
                 <h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><p>首先使用nmap进行初步探测</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> nmap -sS -sV -T5 -A -p- -Pn --min-rate 1000 192.168.111.20<br></code></pre></td></tr></table></figure>
+
 <p><img src="/2026/03/20/Lord-of-the-root/51d32c05a8353bc4e72b5b2b4c26781.png" srcset="/img/loading.gif" lazyload></p>
 <p>发现只开放了22和1337两个端口，进行UDP扫描</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> nmap --top-ports 20 192.168.111.20<br></code></pre></td></tr></table></figure>
+
 <p><img src="/2026/03/20/Lord-of-the-root/340b83c917f3d54b1268ea0d5b3f837.png" srcset="/img/loading.gif" lazyload></p>
 <p>只有一个ssh端口开放，尝试连接</p>
 <p><img src="/2026/03/20/Lord-of-the-root/365b5445f2b80ff1428ab5575e45b72.png" srcset="/img/loading.gif" lazyload></p>
@@ -340,6 +344,9 @@
 <p>得到四个库名，在<code>Webapp</code>数据库下找到了<code>Users</code>数据表</p>
 <p><img src="/2026/03/20/Lord-of-the-root/3b46e338b90f4740dbd354ecc0f2c0b.png" srcset="/img/loading.gif" lazyload></p>
 <p>发现存在<code>password</code>和<code>username</code>两个字段，那么直接dump下来</p>
+<p>完整Payload：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sqlmap -u <span class="hljs-string">&quot;http://192.168.111.20:1337/978345210/index.php&quot;</span> --forms -D Webapp -T Users -C <span class="hljs-built_in">id</span>,username,password --dump<br></code></pre></td></tr></table></figure>
+
 <p><img src="/2026/03/20/Lord-of-the-root/a7dedc79c687e52320a31a63d7b3ffe.png" srcset="/img/loading.gif" lazyload></p>
 <p>得到五个用户的用户名以及密码，拿下来整理一下做成字典进行爆破</p>
 <p><img src="/2026/03/20/Lord-of-the-root/e78f13fcbf26d4467f5eadf8f019aa9.png" srcset="/img/loading.gif" lazyload></p>
@@ -350,15 +357,14 @@
 <p>searchsploit找到<code>Ubuntu 14.04</code>，使用编号<code>39166.c</code>exp传到靶机上执行</p>
 <p><img src="/2026/03/20/Lord-of-the-root/fdb890d1341405d3a4ed8c7e0965f8d.png" srcset="/img/loading.gif" lazyload></p>
 <p>成功提权至root用户</p>
-<h2 id="UDF提权"><a href="#UDF提权" class="headerlink" title="UDF提权"></a>UDF提权</h2><h5>UDF（user defind function）用户自定义函数，通过添加新函数，对MySQL的功能进行扩充。调用方式与一般系统自带的函数相同，例如user()，version()等函数。udf 文件后缀在windows与linux系统下分别为dll与so，即动态链接库文件，由C、C++编写。</h5>
-
+<h2 id="UDF提权"><a href="#UDF提权" class="headerlink" title="UDF提权"></a>UDF提权</h2><p><strong>UDF（user defind function）用户自定义函数，通过添加新函数，对MySQL的功能进行扩充。调用方式与一般系统自带的函数相同，例如user()，version()等函数。udf 文件后缀在windows与linux系统下分别为dll与so，即动态链接库文件，由C、C++编写。</strong></p>
 <p>netstat发现开放3306端口</p>
 <p><img src="/2026/03/20/Lord-of-the-root/0b03566ada39fa881202c17b595b022.png" srcset="/img/loading.gif" lazyload></p>
 <p>翻找数据库配置文件，得到登录账户和密码：<code>root/darkshadow</code></p>
 <p><img src="/2026/03/20/Lord-of-the-root/image-20260320161527476.png" srcset="/img/loading.gif" lazyload></p>
 <p>进行登录，查看<code>secure_file_pri</code>是否为空值</p>
 <p><img src="/2026/03/20/Lord-of-the-root/d79f3d82ec83a0a5b37d6a3fa5c2481.png" srcset="/img/loading.gif" lazyload></p>
-<p>查看权限，很好是root权限</p>
+<p>查看权限，是root权限</p>
 <p><img src="/2026/03/20/Lord-of-the-root/ed6261747b2cbf9d33128ac3b3c7cf3.png" srcset="/img/loading.gif" lazyload></p>
 <p>获取Plugin的路径，后面进行dumpfile</p>
 <p><img src="/2026/03/20/Lord-of-the-root/eed6223d3cf8e90eed8493146c3419e.png" srcset="/img/loading.gif" lazyload></p>
@@ -368,7 +374,9 @@
 <p><img src="/2026/03/20/Lord-of-the-root/0eb43639335f0f7724be08ad767d2af.png" srcset="/img/loading.gif" lazyload></p>
 <p>选取32位的<code>lib_mysqludf_sys_32.so</code>文件，拷贝至相关文件夹下</p>
 <p><img src="/2026/03/20/Lord-of-the-root/e0321969a9b3644660fd476f76f4b63.png" srcset="/img/loading.gif" lazyload></p>
-<p>导入动态链接库，方法有多种，这里使用hex编码写UDF文件。使用命令：<code>xxd -ps udf.so | tr &#39;\n&#39; &#39;@&#39; | sed s/@//g</code>。<code>xxd</code>：用于把文件转换成十六进制(hex)格式，<code>-p</code>：以“纯hex字符串“输出，<code>-s</code>：表示连续输出，<code>tr &#39;\n&#39; &#39;@&#39;</code>：表示把多行的hex内容变成一行(用@代替换行)，<code>| sed s/@//g</code>：表示把刚刚的@全部删除，最终得到一整行的hex字符串。</p>
+<p>导入动态链接库，方法有多种，这里使用hex编码写UDF文件。使用命令：<code>xxd -ps udf.so | tr &#39;\n&#39; &#39;@&#39; | sed s/@//g</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">xxd -ps udf.so | <span class="hljs-built_in">tr</span> <span class="hljs-string">&#x27;\n&#x27;</span> <span class="hljs-string">&#x27;@&#x27;</span> | sed s/@//g<br>//-p，以<span class="hljs-string">&quot;纯hex字符串&quot;</span>输出<br>//-s，表示连续输出<br>//tr <span class="hljs-string">&#x27;\n&#x27;</span> <span class="hljs-string">&#x27;@&#x27;</span>，表示把多行的hex内容变成一行(用@代替换行)<br>//sed s/@//g，表示把刚刚的<span class="hljs-string">&#x27;@&#x27;</span>全部删除，最终得到一整行的hex字符串<br></code></pre></td></tr></table></figure>
+
 <p><img src="/2026/03/20/Lord-of-the-root/10edd99988f8284839dfd0eef51d781.png" srcset="/img/loading.gif" lazyload></p>
 <p>靶机进入mysql服务，复制整行hex字符串再into dumpfile进去</p>
 <p><img src="/2026/03/20/Lord-of-the-root/472feb947f8500e59c53dfcc515527a.png" srcset="/img/loading.gif" lazyload></p>
@@ -475,6 +483,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2026/03/28/Tr0ll2/" title="Tr0ll2">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Tr0ll2</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
