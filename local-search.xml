@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>记一次某证书站的漏洞挖掘</title>
+    <link href="/2026/06/07/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9F%90%E8%AF%81%E4%B9%A6%E7%AB%99%E7%9A%84%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/"/>
+    <url>/2026/06/07/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9F%90%E8%AF%81%E4%B9%A6%E7%AB%99%E7%9A%84%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/</url>
+    
+    <content type="html"><![CDATA[<h1 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h1><p>前期通过信息收集碰到一处XX平台登录系统，目前站点已关闭，大致长下面这个样子</p><p><img src="/2026/06/07/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9F%90%E8%AF%81%E4%B9%A6%E7%AB%99%E7%9A%84%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/31b35a18692d77318e52a8854a8b72d.jpg"></p><p>首先，登录框渗透思路多种。一般可以先看使用的是什么技术栈，然后尝试弱口令&#x2F;万能密码等</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">1.常规未授权接口<br>2.手动拼接未授权页面进行模糊测试<br>3.提取js从中分析<br>4.目录扫描<br>...<br></code></pre></td></tr></table></figure><p>尝试了弱口令&#x2F;SQL万能密码均无果，然后使用dddd扫描工具进行初始目录扫描，与此同时再用JSSS-Find搜集所有js，然后得到如下结果：</p><p><img src="/2026/06/07/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9F%90%E8%AF%81%E4%B9%A6%E7%AB%99%E7%9A%84%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/image-20260607193509022.png"></p><p><img src="/2026/06/07/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9F%90%E8%AF%81%E4%B9%A6%E7%AB%99%E7%9A%84%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/image-20260607193616732.png"></p><p>查看JSSS-Find给出的报告除了发现一个邮箱地址其他的没有什么用</p><p><img src="/2026/06/07/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9F%90%E8%AF%81%E4%B9%A6%E7%AB%99%E7%9A%84%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/image-20260607193904003.png"></p><h1 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h1><p>经过不断的Fuzz，终于在<code>/xxxxx/downloadfile</code>该路径下发现可能存在文件读取或下载，但是无论读取什么文件都显示无权限，后面直接给GPT帮我分析，才知道请求头必须携带<code>uid=1</code>才能正常回显</p><p><img src="/2026/06/07/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9F%90%E8%AF%81%E4%B9%A6%E7%AB%99%E7%9A%84%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/image-20260607195139684.png"></p><p>尝试读取<code>web.config</code>系统配置文件但是发现被拦截了，然后从网上翻找相关资料文章尝试绕过均无果。最后利用了<strong>Windows 8.3短文件名绕过</strong>。</p><h2 id="Windows-8-3短文件名"><a href="#Windows-8-3短文件名" class="headerlink" title="Windows 8.3短文件名"></a>Windows 8.3短文件名</h2><p><em>原理：这是Windows系统为了兼容旧版DOS&#x2F;16位程序而保留的一种机制（8.3命名规则）。当文件名超过8个字符，或扩展名超过3个字符时，Windows会自动生成一个短文件名，格式通常为：<strong>前6个字符~1.扩展名前3个字符</strong>。</em></p><p>*映射关系：若目标文件为<code>machine.config</code>，则短文件名则为&#96;&#96;MACHIN~1.CON<code>*</code></p><p>根据这个特性，即可成功读取<code>web.config</code>配置文件</p><p><img src="/2026/06/07/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9F%90%E8%AF%81%E4%B9%A6%E7%AB%99%E7%9A%84%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/image-20260607200750407.png"></p><h1 id="文件写入"><a href="#文件写入" class="headerlink" title="文件写入"></a>文件写入</h1><p>后续还发现一处<code>/xxxx/uploadChunk</code>的接口可以向目标站点写入文件，但是需要配合另外一处<code>/xxxx/megerChunk</code>接口进行合并分片再写入</p><p><img src="/2026/06/07/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9F%90%E8%AF%81%E4%B9%A6%E7%AB%99%E7%9A%84%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/image-20260607201253500.png"></p><p>然后在<code>xxxx/megerChunk</code>触发路径穿越，把txt文件合并写入</p><p><img src="/2026/06/07/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9F%90%E8%AF%81%E4%B9%A6%E7%AB%99%E7%9A%84%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/image-20260607201905892.png"></p><p><img src="/2026/06/07/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9F%90%E8%AF%81%E4%B9%A6%E7%AB%99%E7%9A%84%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/1b802fd45a16c6e9dea2b47283e7142.jpg"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>漏洞挖掘</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>渗透测试</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>PowerGrid</title>
     <link href="/2026/04/18/PowerGrid/"/>
     <url>/2026/04/18/PowerGrid/</url>
