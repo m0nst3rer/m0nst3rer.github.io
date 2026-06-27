@@ -50,7 +50,7 @@
 <meta property="og:image" content="https://m0nst3rer.github.io/2026/06/23/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%A4%9A%E6%BC%8F%E6%B4%9E%E4%B8%B2%E8%81%94%E6%A1%88%E4%BE%8B/image-20260624133728863.png">
 <meta property="og:image" content="https://m0nst3rer.github.io/2026/06/23/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%A4%9A%E6%BC%8F%E6%B4%9E%E4%B8%B2%E8%81%94%E6%A1%88%E4%BE%8B/image-20260624133426636.png">
 <meta property="article:published_time" content="2026-06-23T15:19:25.000Z">
-<meta property="article:modified_time" content="2026-06-27T02:33:58.331Z">
+<meta property="article:modified_time" content="2026-06-27T02:46:45.551Z">
 <meta property="article:author" content="m0nst3rer">
 <meta property="article:tag" content="渗透测试">
 <meta name="twitter:card" content="summary_large_image">
@@ -406,11 +406,8 @@
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">if</span> (username != <span class="hljs-string">&quot;&quot;</span>) sql = <span class="hljs-string">&quot;select top 1 ... from XOAUser a WITH(NOLOCK) where username=&quot;</span> + username;<br>sql += <span class="hljs-string">&quot; and (deptid in (&quot;</span> + DeptView + <span class="hljs-string">&quot;) or username=&quot;</span> + UserId + <span class="hljs-string">&quot;)&quot;</span>;<br></code></pre></td></tr></table></figure>
 
 <p>大致逻辑如下：</p>
-<ul>
-<li>部门可见性取自 <code>DeptView</code></li>
-<li>当 <code>username</code> 非空时按 <code>where username=...</code> 查询</li>
-<li>追加 <code>and (deptid in (...) or username=当前用户)</code></li>
-</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">部门可见性取自 DeptView<br>当 username 非空时按 where username=... 查询<br>追加 and (deptid in (...) or username=当前用户)<br></code></pre></td></tr></table></figure>
+
 <h3>4.6 username 存在SQL注入</h3>
 
 <p>我注意到它没有对用户输入的 <code>username</code> 做任何过滤，但是做了“只能看自己&#x2F;本部门”的逻辑，经测试可以使用注释符绕过该限制：</p>
