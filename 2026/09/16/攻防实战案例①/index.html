@@ -68,7 +68,7 @@
 <meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916164022780.png">
 <meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916164233675.png">
 <meta property="article:published_time" content="2026-09-15T18:13:36.000Z">
-<meta property="article:modified_time" content="2026-09-16T08:45:23.048Z">
+<meta property="article:modified_time" content="2026-09-16T08:54:55.813Z">
 <meta property="article:author" content="m0nst3rer">
 <meta property="article:tag" content="渗透测试">
 <meta name="twitter:card" content="summary_large_image">
@@ -328,7 +328,7 @@
 <p>通过目录扫描和指纹识别，发现存在<strong>积木报表</strong>的目录：<code>prod-api/jmreport</code> ，进一步测试发现 <strong>MySQL JDBC</strong> 任意文件读取漏洞</p>
 <p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916143030812.png" srcset="/img/loading.gif" lazyload></p>
 <p>在个人服务器起一个<strong>fake mysql</strong>服务，发现成功读取系统文件 <code>win.ini</code></p>
-<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916143241056.png" srcset="/img/loading.gif" lazyload alt="image-20260916143241056"></p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916143241056.png" srcset="/img/loading.gif" lazyload></p>
 <h1 id="案例二"><a href="#案例二" class="headerlink" title="案例二"></a>案例二</h1><h2 id="弱口令"><a href="#弱口令" class="headerlink" title="弱口令"></a>弱口令</h2><p>在对靶标进行外网信息收集的过程中，发现某个用户手册存在默认密码</p>
 <p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916143715030.png" srcset="/img/loading.gif" lazyload></p>
 <p>再利用获得的默认密码去登录靶标内部署的产品，成功获取该平台的控制权限</p>
