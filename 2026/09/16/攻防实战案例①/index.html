@@ -1,0 +1,808 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/hacker.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="m0nst3rer">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前言记录一下之前打的某次攻防，前期规则啥的既苛刻又抽象打的很难受，交的报告不是分少就是在申诉的路上，不过也是咬牙打完了。自己太菜没帮上啥忙，在这过程中也是学习到了很多东西，希望自己下次能够从容应对. 案例一任意文件读取前期先在平台上找到了相关靶标，再通过 Hunter 找到靶标下的相关资产，找到一个支付平台  通过目录扫描和指纹识别，发现存在积木报表的目录：prod-api&#x2F;jmreport ，进">
+<meta property="og:type" content="article">
+<meta property="og:title" content="攻防实战案例①">
+<meta property="og:url" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/index.html">
+<meta property="og:site_name" content="m0nst3rer&#39;Blog">
+<meta property="og:description" content="前言记录一下之前打的某次攻防，前期规则啥的既苛刻又抽象打的很难受，交的报告不是分少就是在申诉的路上，不过也是咬牙打完了。自己太菜没帮上啥忙，在这过程中也是学习到了很多东西，希望自己下次能够从容应对. 案例一任意文件读取前期先在平台上找到了相关靶标，再通过 Hunter 找到靶标下的相关资产，找到一个支付平台  通过目录扫描和指纹识别，发现存在积木报表的目录：prod-api&#x2F;jmreport ，进">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916142420943.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916143030812.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916143241056.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916143715030.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916144128401.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916144545369.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916145056140.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916145339900.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916145752109.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916150054702.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916150819310.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916150952575.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916151807274.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916152028261.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916152337082.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916153035074.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916153548713.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916154020174.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916154109441.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916154438731.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916154718214.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916154934433.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916155408177.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916155735104.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916155832493.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916160036571.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916160752825.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916160910102.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916161607750.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916161652357.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916161856510.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916162159599.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916162351208.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916162537435.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916162922331.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916163110026.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916163317813.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916163643902.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916163928926.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916164022780.png">
+<meta property="og:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916164233675.png">
+<meta property="article:published_time" content="2026-09-15T18:13:36.000Z">
+<meta property="article:modified_time" content="2026-09-16T08:45:23.048Z">
+<meta property="article:author" content="m0nst3rer">
+<meta property="article:tag" content="渗透测试">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://m0nst3rer.github.io/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916142420943.png">
+  
+  
+  
+  <title>攻防实战案例① - m0nst3rer&#39;Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/macpanel.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"m0nst3rer.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong class="navbar-title">m0nst3rer&#39;Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="攻防实战案例①"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-09-16 02:13" pubdate>
+          2026年9月16日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">攻防实战案例①</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>记录一下之前打的某次攻防，前期规则啥的既苛刻又抽象打的很难受，交的报告不是分少就是在申诉的路上，不过也是咬牙打完了。自己太菜没帮上啥忙，在这过程中也是学习到了很多东西，希望自己下次能够从容应对.</p>
+<h1 id="案例一"><a href="#案例一" class="headerlink" title="案例一"></a>案例一</h1><h2 id="任意文件读取"><a href="#任意文件读取" class="headerlink" title="任意文件读取"></a>任意文件读取</h2><p>前期先在平台上找到了相关靶标，再通过 Hunter 找到靶标下的相关资产，找到一个支付平台</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916142420943.png" srcset="/img/loading.gif" lazyload></p>
+<p>通过目录扫描和指纹识别，发现存在<strong>积木报表</strong>的目录：<code>prod-api/jmreport</code> ，进一步测试发现 <strong>MySQL JDBC</strong> 任意文件读取漏洞</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916143030812.png" srcset="/img/loading.gif" lazyload></p>
+<p>在个人服务器起一个<strong>fake mysql</strong>服务，发现成功读取系统文件 <code>win.ini</code></p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916143241056.png" srcset="/img/loading.gif" lazyload alt="image-20260916143241056"></p>
+<h1 id="案例二"><a href="#案例二" class="headerlink" title="案例二"></a>案例二</h1><h2 id="弱口令"><a href="#弱口令" class="headerlink" title="弱口令"></a>弱口令</h2><p>在对靶标进行外网信息收集的过程中，发现某个用户手册存在默认密码</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916143715030.png" srcset="/img/loading.gif" lazyload></p>
+<p>再利用获得的默认密码去登录靶标内部署的产品，成功获取该平台的控制权限</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916144128401.png" srcset="/img/loading.gif" lazyload></p>
+<p>可获取并访问核心数据，包括：智能面板机、全校师生数据等，并且具有修改删除的权限。</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916144545369.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="案例三"><a href="#案例三" class="headerlink" title="案例三"></a>案例三</h1><h2 id="任意文件读取-代码审计"><a href="#任意文件读取-代码审计" class="headerlink" title="任意文件读取 + 代码审计"></a>任意文件读取 + 代码审计</h2><p>利用<strong>JDBC连接Fake-MySQL服务器</strong>读取源码</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916145056140.png" srcset="/img/loading.gif" lazyload></p>
+<p>发现硬编码密钥，通过这个key可以获取用户会话token，编写利用EXP脚本</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916145339900.png" srcset="/img/loading.gif" lazyload></p>
+<p>利用获取到的token成功访问个人信息页</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916145752109.png" srcset="/img/loading.gif" lazyload></p>
+<p>对其进行爆破，可获取大量用户的会话token，这样即可获取大量用户信息</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916150054702.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="案例四"><a href="#案例四" class="headerlink" title="案例四"></a>案例四</h1><h2 id="任意文件读取-代码审计-1"><a href="#任意文件读取-代码审计-1" class="headerlink" title="任意文件读取 + 代码审计"></a>任意文件读取 + 代码审计</h2><p>直接沿用<strong>JDBC连接Fake-MySQL服务器</strong>读取jar包文件进行审计，也是同一个硬编码key，所以直接编写EXP利用脚本</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916150819310.png" srcset="/img/loading.gif" lazyload></p>
+<p>成功获取管理员token，也从中找到了管理员的密码</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916150952575.png" srcset="/img/loading.gif" lazyload></p>
+<p>后续也是拿去破解该密码，拿到了大量师生个人信息、学籍信息、运维配置信息等。</p>
+<h1 id="案例五"><a href="#案例五" class="headerlink" title="案例五"></a>案例五</h1><h2 id="任意文件读取-代码审计-2"><a href="#任意文件读取-代码审计-2" class="headerlink" title="任意文件读取 + 代码审计"></a>任意文件读取 + 代码审计</h2><p>依旧是上面案例的手法，拿到硬编码key直接编写EXP利用脚本</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916151807274.png" srcset="/img/loading.gif" lazyload></p>
+<p>通过 <code>prod-api/getInfo</code> 接口获取管理员账号密码</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916152028261.png" srcset="/img/loading.gif" lazyload></p>
+<p>通过枚举其他接口获取<strong>12287</strong>条个人敏感信息数据，包括姓名、身份证、手机号等。可惜数据分已经不值钱了…</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916152337082.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="案例六"><a href="#案例六" class="headerlink" title="案例六"></a>案例六</h1><h2 id="弱口令-1"><a href="#弱口令-1" class="headerlink" title="弱口令"></a>弱口令</h2><p>前期通过信息收集找到某个靶标的某校园平台，有意思的是让豆包生成一组合适的弱口令字典，随便试几个结果成功登录了。</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916153035074.png" srcset="/img/loading.gif" lazyload></p>
+<p>通过指纹识别发现该系统是基于<strong>SpringBlade</strong>框架开发，因此可以尝试利用流程部署进行RCE远程代码执行。</p>
+<p>进一步测试发现多个流程和接口</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916153548713.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="部署恶意流程上传恶意XML文件"><a href="#部署恶意流程上传恶意XML文件" class="headerlink" title="部署恶意流程上传恶意XML文件"></a>部署恶意流程上传恶意XML文件</h2><p>尝试构造数据包上传恶意XML文件</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916154020174.png" srcset="/img/loading.gif" lazyload alt="image-20260916154020174"></p>
+<p>成功上传</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916154109441.png" srcset="/img/loading.gif" lazyload></p>
+<p>访问查看部署的恶意流程可以看到部署成功</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916154438731.png" srcset="/img/loading.gif" lazyload></p>
+<p>启动该流程</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916154718214.png" srcset="/img/loading.gif" lazyload></p>
+<p>至此成功RCE</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916154934433.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="内网渗透"><a href="#内网渗透" class="headerlink" title="内网渗透"></a>内网渗透</h2><p>之后尝试进行上线到<strong>CobaltStrike</strong></p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916155408177.png" srcset="/img/loading.gif" lazyload></p>
+<p>上线成功且是最高的<strong>System</strong>权限，再利用<strong>Mimikatz（猕猴桃）<strong>获取管理员账户的</strong>NTML HASH</strong></p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916155735104.png" srcset="/img/loading.gif" lazyload></p>
+<p>拿去解密得到以下明文结果，后续则可以尝试远程桌面登录控制主机</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916155832493.png" srcset="/img/loading.gif" lazyload></p>
+<p>查看内网环境</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916160036571.png" srcset="/img/loading.gif" lazyload></p>
+<p>数据获取阶段可查看大量表格和数据文件</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916160752825.png" srcset="/img/loading.gif" lazyload></p>
+<p>后续在内网中还发现了一个<strong>Nacos</strong></p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916160910102.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="案例七"><a href="#案例七" class="headerlink" title="案例七"></a>案例七</h1><h2 id="某OA系统后台SQL盲注"><a href="#某OA系统后台SQL盲注" class="headerlink" title="某OA系统后台SQL盲注"></a>某OA系统后台SQL盲注</h2><p>首先爆破用户名然后固定密码</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916161607750.png" srcset="/img/loading.gif" lazyload></p>
+<p>成功得到几个弱口令账户</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916161652357.png" srcset="/img/loading.gif" lazyload></p>
+<p>发现后台存在<strong>SQL盲注</strong>漏洞</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916161856510.png" srcset="/img/loading.gif" lazyload></p>
+<p>编写盲注脚本枚举在线用户的Cookie</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916162159599.png" srcset="/img/loading.gif" lazyload></p>
+<p>替换Cookie成功接管其他用户账号</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916162351208.png" srcset="/img/loading.gif" lazyload></p>
+<p>依次尝试获取到的Cookie，也是成功接管管理员账号，权限一下子就多了</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916162537435.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="案例八"><a href="#案例八" class="headerlink" title="案例八"></a>案例八</h1><h2 id="某服务平台RCE"><a href="#某服务平台RCE" class="headerlink" title="某服务平台RCE"></a>某服务平台RCE</h2><p>前期在Quake找到了一个靶标资产下存在某服务平台</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916162922331.png" srcset="/img/loading.gif" lazyload></p>
+<p>在某处接口打出了RCE</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916163110026.png" srcset="/img/loading.gif" lazyload alt="image-20260916163110026"></p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916163317813.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="数据库沦陷"><a href="#数据库沦陷" class="headerlink" title="数据库沦陷"></a>数据库沦陷</h2><p>通过RCE入口读取配置文件发现数据库连接凭据</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916163643902.png" srcset="/img/loading.gif" lazyload></p>
+<p>测试<strong>MySQL</strong>连接，成功接管数据库</p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916163928926.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916164022780.png" srcset="/img/loading.gif" lazyload></p>
+<p>接着尝试连接<strong>Redis</strong></p>
+<p><img src="/2026/09/16/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B%E2%91%A0/image-20260916164233675.png" srcset="/img/loading.gif" lazyload></p>
+<p>至此获取到所有相关数据库的数据。</p>
+<h1 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h1><p>先写这么多，后面再单独写一份内网的，收获颇丰.</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%94%BB%E9%98%B2%E5%AE%9E%E6%88%98/" class="category-chain-item">攻防实战</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" class="print-no-link">#渗透测试</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>攻防实战案例①</div>
+      <div>https://m0nst3rer.github.io/2026/09/16/攻防实战案例①/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>m0nst3rer</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年9月16日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/06/23/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%A4%9A%E6%BC%8F%E6%B4%9E%E4%B8%B2%E8%81%94%E6%A1%88%E4%BE%8B/" title="记一次多漏洞串联案例">
+                        <span class="hidden-mobile">记一次多漏洞串联案例</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+<div>
+  <span id="timeDate">正在载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("09/01/2024 00:00:00");
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "🚀已持续航行&nbsp"+dnum+"&nbsp天";  
+      document.getElementById("times").innerHTML = hnum + "&nbsp时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";
+  }
+  setInterval("createtime()",250);
+  </script>
+</div>
+
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/stars.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
